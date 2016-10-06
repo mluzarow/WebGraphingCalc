@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.5.3/math.min.js">
+		</script>
+	</head>
+	
+	<body>
+		<script>
+			// Token stack
+			var stack = new Array ();
+			// Power toggle
+			var powerState = false
+		
+			// Print key strokes
+			function btnToText (char) {
+				// Make sure the power is on
+				if (powerState == true) {
+					var LCD = document.getElementById ("output");
+					LCD.textContent += char;
+				}
+			}
+			
+			// Eval the equation; it's like magic
+			function evalEquation () {
+				// Make sure the power is on
+				if (powerState == true) {
+					var LCD = document.getElementById ("output");
+					LCD.textContent = math.eval (LCD.textContent);
+				}
+			}
+			
+			// Clear the LCD
+			function equClear () {
+			    var LCD = document.getElementById ("output");
+			    LCD.textContent = "";
+			}
+			
+			// Cut off the last character in the LCD string
+			function equDelete () {
+				// Make sure the power is on
+				if (powerState == true) {
+					var LCD = document.getElementById ("output");
+					LCD.textContent = LCD.textContent.substring (0, LCD.textContent.length - 1);
+				}
+			}
+			
+			// Turn the unit on and off
+			function togglePower () {
+				var screen = document.getElementById ("LCD").getContext ("2d");
+			    
+				// If the unit is off...
+				if (powerState == false) {
+					// Turn it on
+					screen.fillStyle = "green";
+				// If the unit is on...
+				} else {
+					// Turn if off
+					screen.fillStyle = "black";
+				}
+				screen.fillRect (0, 0, 320, 240);
+				// Flip the power flag
+				powerState = !powerState;
+			}
+		</script>
+
+		
+
+		<!-- Calculator frame -->
+		<div id="bg" style="background : #000077; width : 350px; height : 700px; margin: 50px auto;">
+		    
+		    <!-- Spacer -->
+			<div style="height:15px;">
+			</div>
+			
+			<!-- LCD -->
+			<canvas id="LCD" height="240" width="320" style="margin-left:15px; border:1px solid white;">
+			    
+			</canvas>
+			
+			<!-- Button panel -->
+			<div id="panel">
+				
+				<div>
+				    <!-- Equation input button -->
+					<button onclick="?" style="margin-left:25px; width:50px; height:30px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:grey; border:grey;">
+						Y=
+					</button>
+					
+					<!-- Plotter options button -->
+					<button onclick="?" style="margin-left:5px; width:50px; height:30px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:grey; border:grey;">
+						WIN
+					</button>
+					
+					<!-- Plotter zoom button -->
+					<button onclick="?" style="margin-left:5px; width:50px; height:30px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:grey; border:grey;">
+						ZOOM
+					</button>
+					
+					<!-- Plotter equation trace button -->
+					<button onclick="?" style="margin-left:5px; width:50px; height:30px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:grey; border:grey;">
+						TRACE
+					</button>
+					
+					<!-- Plotter plot button -->
+					<button onclick="?" style="margin-left:5px; width:50px; height:30px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:grey; border:grey;">
+						PLOT
+					</button>
+				</div>
+				
+			    <div>
+			        <!-- Directional up button -->
+					<button onclick="cursor (0, 1)" style="margin-left:230px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:grey; border:grey;">
+						^
+					</button>
+			    </div>
+				
+				<!-- Button row #-4 -->
+				<div id="r997">
+				    <!-- Alternate mode toggle button -->
+					<button onclick="toggleMode (1)" style="margin-left:25px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:lightblue; border:grey;">
+						2nd
+					</button>
+					
+					<!-- Configurations button -->
+					<button onclick="btnToText ('X')" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
+						MODE
+					</button>
+					
+					<!-- Delete button -->
+		            <button onclick="equDelete ()" id="btn_del" style="width:50px; height:50px; margin-left:5px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
+			            DEL
+		            </button>
+		            
+		            <!-- Directional left button -->
+					<button onclick="cursor (-1, 0)" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:grey; border:grey;">
+						&lt;
+					</button>
+					
+					<!-- Directional right button -->
+					<button onclick="cursor (1, 0)" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:grey; border:grey;">
+						>
+					</button>
+				</div>
+				
+				<!-- Button row #-3 -->
+				<div id="r998">
+					<!-- Alpha toggle button -->
+					<button onclick="toggleMode (2)" style="margin-left:25px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:green; border:grey;">
+						ALPHA
+					</button>
+					
+					<!-- Variable input button -->
+					<button onclick="btnToText ('X')" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
+						X,T,?,n
+					</button>
+					
+					<!-- Statistics functions button -->
+					<button onclick="listStatFuncs ()" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
+						STAT
+					</button>
+					
+					<!-- Directional down button -->
+					<button onclick="cursor (0, -1)" style="margin-left:35px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:grey; border:grey;">
+						V
+					</button>
+				</div>
+				
+				<!-- Button row #-2 -->
+				<div id="r999">
+					 <!-- List of extra functions button -->
+					<button onclick="listExtraFuncs ()" style="margin-left:25px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
+						MATH
+					</button>
+					
+					<!-- List calculator applications -->
+					<button onclick="listApps ()" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
+						APPS
+					</button>
+					
+					<!-- User-made apps / app developer button -->
+					<button onclick="listUserApps ()" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
+						PRGM
+					</button>
+					
+					<!-- View memory variables button -->
+					<button onclick="listVars ()" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
+						VARS
+					</button>
+					
+					<!-- Clear screen button -->
+					<button onclick="equClear ()" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
+						CLR
+					</button>
+				</div>
+				
+				<!-- Button row #-1 -->
+				<div id="r0">
+					
+					<!-- Inverse button -->
+					<button onclick="btnToText ('^(-1)')" style="margin-left:25px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
+						x?¹
+					</button>
+					
+					<!-- Sine button -->
+					<button onclick="btnToText ('sin(')" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
+						SIN
+					</button>
+					
+					<!-- Cosine button -->
+					<button onclick="btnToText ('cos(')" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
+						COS
+					</button>
+					
+					<!-- Tangent button -->
+					<button onclick="btnToText ('tan(')" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
+						TAN
+					</button>
+					
+					<!-- Exponential button -->
+					<button onclick="btnToText ('^')" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
+						^
+					</button>
+				</div>
+			
+				<!-- Button row #1 -->
+				<div id="r1">
+					
+					<!-- Num Squared button -->
+					<button onclick="btnToText ('^2')" style="margin-left:25px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
+						x²
+					</button>
+					
+					<!-- Comma button -->
+					<button onclick="btnToText (',')" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
+						,
+					</button>
+					
+					<!-- Left parenthesis button -->
+					<button onclick="btnToText ('(')" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
+						(
+					</button>
+					
+					<!-- Right parenthesis button -->
+					<button onclick="btnToText (')')" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
+						)
+					</button>
+			
+					<!-- Divide button -->
+					<button onclick="btnToText ('/')" id="btn_div" style="width:50px; height:50px; margin-left:5px; border-radius:4px; font-size:24px; cursor:pointer; color:white; background:grey; border:grey;">
+						/
+					</button>
+				</div>
+				
+				<!-- Button row #2 -->
+				<div id="r2">
+					
+					<!-- Log -->
+					<button onclick="btnToText ('log(')" style="margin-left:25px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
+						LOG
+					</button>
+					
+					<!-- Numeric 7 button -->
+					<button onclick="btnToText (7)" id="btn_7" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:24px; cursor:pointer;">
+						7
+					</button>
+					
+					<!-- Numeric 8 button -->
+					<button onclick="btnToText (8)" id="btn_8" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:24px; cursor:pointer;">
+						8
+					</button>
+					
+					<!-- Numeric 9 button -->
+					<button onclick="btnToText (9)" id="btn_9" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:24px; cursor:pointer;">
+						9
+					</button>
+					
+					<!-- Multiply button -->
+					<button onclick="btnToText ('*')" id="btn_mult" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:24px; cursor:pointer; color:white; background:grey; border:grey;">
+						*
+					</button>
+				</div>
+				
+				<!-- Button row #3 -->
+				<div id="r2">
+				
+					<!-- Natural Log -->
+					<button onclick="btnToText ('ln(')" style="margin-left:25px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
+						LN
+					</button>
+				
+					<!-- Numeric 4 button -->
+					<button onclick="btnToText (4)" id="btn_4" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:24px; cursor:pointer;">
+						4
+					</button>
+					
+					<!-- Numeric 5 button -->
+					<button onclick="btnToText (5)" id="btn_5" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:24px; cursor:pointer;">
+						5
+					</button>
+					
+					<!-- Numeric 6 button -->
+					<button onclick="btnToText (6)" id="btn_6" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:24px; cursor:pointer;">
+						6
+					</button>
+					
+					<!-- Subtract button -->
+					<button onclick="btnToText ('-')" id="btn_sub" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:24px; cursor:pointer; color:white; background:grey; border:grey;">
+						-
+					</button>
+				</div>
+				
+				<!-- Button row #4 -->
+				<div id="r4">
+					
+					<!-- Store to memory -->
+					<button onclick="equStore ()" style="margin-left:25px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
+						STO>
+					</button>
+					
+					<!-- Numeric 1 button -->
+					<button onclick="btnToText (1)" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:24px; cursor:pointer;">
+						1
+					</button>
+					
+					<!-- Numeric 2 button -->
+					<button onclick="btnToText (2)" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:24px; cursor:pointer;">
+						2
+					</button>
+					
+					<!-- Numeric 3 button -->
+					<button onclick="btnToText (3)" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:24px; cursor:pointer;">
+						3
+					</button>
+					
+					<!-- Add button -->
+					<button onclick="btnToText ('+')" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:24px; cursor:pointer; color:white; background:grey; border:grey;">
+						+
+					</button>
+				</div>
+				
+				<!-- Button row #5 -->
+				<div id="r5">
+					<!-- On button; turn the calculator on or off -->
+					<button onclick="togglePower ()" style="margin-left:25px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
+						ON
+					</button>
+					
+					<!-- Numeric 0 button -->
+					<button onclick="btnToText (0)" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:24px; cursor:pointer;">
+						0
+					</button>
+					
+					<!-- Decimal button -->
+					<button onclick="btnToText ('.')" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:24px; cursor:pointer;">
+						.
+					</button>
+					
+					<!-- Negative togger button -->
+					<button onclick="btnToText ('-')" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:24px; cursor:pointer;">
+						(-)
+					</button>
+					
+					<!-- Enter button -->
+					<button onclick="evalEquation ()" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:24px; cursor:pointer; color:white; background:grey; border:grey;">
+						=
+					</button>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
