@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	
+	</head>
+	<body>
+		<!-- Calculator Frame -->
+		<div id="bg">
+			<!-- Spacer -->
+			<div id="spacer"></div>
+			
+			<!-- LCD -->
+			<canvas id="LCD" height="240" width="320">
+			
+			</canvas>
+			
+			<!-- Button Panel -->
+			<div id="btn_panel">
+			
+				<!-- Row #1 (weird thin buttons) -->
+				<div id="r1">	
+					<!-- Equation input button -->
+					<button onclick="?">
+						Y=
+					</button>
+					
+					<!-- Plotter options button -->
+					<button onclick="?">
+						WIN
+					</button>
+					
+					<!-- Plotter zoom button -->
+					<button onclick="?">
+						ZOOM
+					</button>
+					
+					<!-- Plotter equation trace button -->
+					<button onclick="?">
+						TRACE
+					</button>
+					
+					<!-- Plotter plot button -->
+					<button onclick="?">
+						PLOT
+					</button>
+				</div>
+				
+				<!-- Directional up button (why is this here?) -->
+				<div>
+					<button onclick="?">
+						^
+					</button>
+				</div>
+				
+				<!-- Row #2 -->
+				<div id="r2">
+					<!-- Alternate mode toggle button -->
+					<button onclick="toggleMode (1)">
+						2nd
+					</button>
+					
+					<!-- Configurations button -->
+					<button onclick="btnToText ('X')">
+						MODE
+					</button>
+					
+					<!-- Delete button -->
+		            <button onclick="equDelete ()">
+			            DEL
+		            </button>
+		            
+		            <!-- Directional left button -->
+					<button onclick="cursor (-1, 0)">
+						<
+					</button>
+					
+					<!-- Directional right button -->
+					<button onclick="cursor (1, 0)">
+						>
+					</button>
+				</div>
+				
+				<!-- Row #3 -->
+				<div id="r3">
+					<!-- Alpha toggle button -->
+					<button onclick="toggleMode (2)">
+						ALPHA
+					</button>
+					
+					<!-- Variable input button -->
+					<button onclick="btnToText ('X')">
+						X,T,?,n
+					</button>
+					
+					<!-- Statistics functions button -->
+					<button onclick="listStatFuncs ()">
+						STAT
+					</button>
+					
+					<!-- Directional down button -->
+					<button onclick="cursor (0, -1)">
+						V
+					</button>
+				</div>
+				
+				<!-- Row #4 -->
+				<div id="r4">
+					<!-- List of extra functions button -->
+					<button onclick="listExtraFuncs ()">
+						MATH
+					</button>
+					
+					<!-- List calculator applications -->
+					<button onclick="listApps ()">
+						APPS
+					</button>
+					
+					<!-- User-made apps / app developer button -->
+					<button onclick="listUserApps ()">
+						PRGM
+					</button>
+					
+					<!-- View memory variables button -->
+					<button onclick="listVars ()">
+						VARS
+					</button>
+					
+					<!-- Clear screen button -->
+					<button onclick="equClear ()">
+						CLR
+					</button>
+				</div>
+				
+				<!-- Row #5 -->
+				<div id="r5">
+					<!-- Inverse button -->
+					<button onclick="btnToText ('^(-1)')">
+						x^2
+					</button>
+					
+					<!-- Sine button -->
+					<button onclick="btnToText ('sin(')">
+						SIN
+					</button>
+					
+					<!-- Cosine button -->
+					<button onclick="btnToText ('cos(')">
+						COS
+					</button>
+					
+					<!-- Tangent button -->
+					<button onclick="btnToText ('tan(')">
+						TAN
+					</button>
+					
+					<!-- Exponential button -->
+					<button onclick="btnToText ('^')">
+						^
+					</button>
+				</div>
+				
+				<!-- Row #6 -->
+				<div id="r6">
+					<!-- Num Squared button -->
+					<button onclick="btnToText ('^2')">
+						x²
+					</button>
+					
+					<!-- Comma button -->
+					<button onclick="btnToText (',')">
+						,
+					</button>
+					
+					<!-- Left parenthesis button -->
+					<button onclick="btnToText ('(')" >
+						(
+					</button>
+					
+					<!-- Right parenthesis button -->
+					<button onclick="btnToText (')')">
+						)
+					</button>
+			
+					<!-- Divide button -->
+					<button onclick="btnToText ('/')">
+						/
+					</button>
+				</div>
+				
+				<!-- Row #7 -->
+				<div id="r7">
+					<!-- Log -->
+					<button onclick="btnToText ('log(')">
+						LOG
+					</button>
+					
+					<!-- Numeric 7 button -->
+					<button onclick="btnToText (7)">
+						7
+					</button>
+					
+					<!-- Numeric 8 button -->
+					<button onclick="btnToText (8)">
+						8
+					</button>
+					
+					<!-- Numeric 9 button -->
+					<button onclick="btnToText (9)">
+						9
+					</button>
+					
+					<!-- Multiply button -->
+					<button onclick="btnToText ('*')">
+						*
+					</button>
+				</div>
+				
+				<!-- Row #8 -->
+				<div id="r8">
+					<!-- Natural Log -->
+					<button onclick="btnToText ('ln(')">
+						LN
+					</button>
+				
+					<!-- Numeric 4 button -->
+					<button onclick="btnToText (4)">
+						4
+					</button>
+					
+					<!-- Numeric 5 button -->
+					<button onclick="btnToText (5)">
+						5
+					</button>
+					
+					<!-- Numeric 6 button -->
+					<button onclick="btnToText (6)">
+						6
+					</button>
+					
+					<!-- Subtract button -->
+					<button onclick="btnToText ('-')">
+						-
+					</button>
+				</div>
+				
+				<!-- Row #9 -->
+				<div id="r9">
+					<!-- Store to memory -->
+					<button onclick="equStore ()">
+						STO>
+					</button>
+					
+					<!-- Numeric 1 button -->
+					<button onclick="btnToText (1)">
+						1
+					</button>
+					
+					<!-- Numeric 2 button -->
+					<button onclick="btnToText (2)">
+						2
+					</button>
+					
+					<!-- Numeric 3 button -->
+					<button onclick="btnToText (3)">
+						3
+					</button>
+					
+					<!-- Add button -->
+					<button onclick="btnToText ('+')">
+						+
+					</button>
+				</div>
+				
+				<!-- Row #10 -->
+				<div id="r10">
+					<!-- On button; turn the calculator on or off -->
+					<button onclick="togglePower ()">
+						ON
+					</button>
+					
+					<!-- Numeric 0 button -->
+					<button onclick="btnToText (0)">
+						0
+					</button>
+					
+					<!-- Decimal button -->
+					<button onclick="btnToText ('.')">
+						.
+					</button>
+					
+					<!-- Negative togger button -->
+					<button onclick="btnToText ('-')">
+						(-)
+					</button>
+					
+					<!-- Enter button -->
+					<button onclick="evalEquation ()">
+						=
+					</button>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
