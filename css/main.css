@@ -1,0 +1,96 @@
+/**
+ * Description: Styling file for index.html of WebGraphingCalc.
+ * Version: 1.0.0
+ * Last update: 2017/02/16
+ **/
+
+/* Spans all buttons, offering a basic button styling and padding. */
+.btn_base {
+	margin-left:5px;
+	width:50px;
+	height:50px;
+	border-radius:4px;
+	font-size:24px;
+	cursor:pointer;
+}
+
+/* Used with buttons on the left-most side; adds more padding. */
+.btn_starters {
+	margin-left:25px;
+}
+
+/* Used with the basic operations (+ - / * =) buttons; different color. */
+.btn_basic_ops {
+	color:white;
+	background:grey;
+	border:grey;
+}
+
+/* Used with black function buttons. */
+.btn_blacks {
+	font-size:14px;
+	color:white;
+	background:black;
+	border:grey;
+}
+
+/* Used with thin plotting buttons. */
+.btn_thins {
+	height:30px;
+	font-size:14px;
+	color:white;
+	background:grey;
+	border:grey;
+}
+
+/* The calculator frame */
+#bg {
+	background:#000077;
+	width:350px;
+	height:820px;
+	margin:50px;
+}
+
+/* Buffer room between top of screen and LCD */
+#spacer {
+	height:15px;
+}
+
+/* The LCD (canvas) of the calculator */
+#LCD {
+	margin-left:15px;
+	border:1px solid white;
+}
+
+/* Special buttons */
+/* Alpha toggle button */
+#btn_alpha {
+	background:green;
+}
+
+/* 2nd mode toggle button */
+#btn_2nd {
+	background:lightblue;
+}
+
+/* D-pad Down */
+#btn_dPad_Down {
+	margin-left:35px;
+	background:grey;
+}
+
+/* D-pad Right */
+#btn_dPad_Right {
+	background:grey;
+}
+
+/* D-pad Left */
+#btn_dPad_Left {
+	background:grey;
+}
+
+/* D-pad Up */
+#btn_dPad_Up {
+	margin-left:230px;
+	background:grey;
+}

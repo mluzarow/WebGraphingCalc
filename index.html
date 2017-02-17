@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	
+        <link rel="stylesheet" type="text/css" href="css/main.css">
 	</head>
 	<body>
 		<!-- Calculator Frame -->
@@ -20,34 +20,34 @@
 				<!-- Row #1 (weird thin buttons) -->
 				<div id="r1">	
 					<!-- Equation input button -->
-					<button onclick="?">
+					<button onclick="?" class="btn_base btn_starters btn_thins">
 						Y=
 					</button>
 					
 					<!-- Plotter options button -->
-					<button onclick="?">
+					<button onclick="?" class="btn_base btn_thins">
 						WIN
 					</button>
 					
 					<!-- Plotter zoom button -->
-					<button onclick="?">
+					<button onclick="?" class="btn_base btn_thins">
 						ZOOM
 					</button>
 					
 					<!-- Plotter equation trace button -->
-					<button onclick="?">
+					<button onclick="?" class="btn_base btn_thins">
 						TRACE
 					</button>
 					
 					<!-- Plotter plot button -->
-					<button onclick="?">
+					<button onclick="?" class="btn_base btn_thins">
 						PLOT
 					</button>
 				</div>
 				
-				<!-- Directional up button (why is this here?) -->
+				<!-- Directional up button. Technically row two, but don't tell anyone. -->
 				<div>
-					<button onclick="?">
+					<button onclick="?" id="btn_dPad_Up" class="btn_base btn_blacks">
 						^
 					</button>
 				</div>
@@ -55,27 +55,27 @@
 				<!-- Row #2 -->
 				<div id="r2">
 					<!-- Alternate mode toggle button -->
-					<button onclick="toggleMode (1)">
+					<button onclick="toggleMode (1)" id="btn_2nd" class="btn_base btn_starters btn_blacks">
 						2nd
 					</button>
 					
 					<!-- Configurations button -->
-					<button onclick="btnToText ('X')">
+					<button onclick="btnToText ('X')" class="btn_base btn_blacks">
 						MODE
 					</button>
 					
 					<!-- Delete button -->
-		            <button onclick="equDelete ()">
+		            <button onclick="equDelete ()" class="btn_base btn_blacks">
 			            DEL
 		            </button>
 		            
 		            <!-- Directional left button -->
-					<button onclick="cursor (-1, 0)">
+					<button onclick="cursor (-1, 0)" id="btn_dPad_Left" class="btn_base btn_blacks">
 						<
 					</button>
 					
 					<!-- Directional right button -->
-					<button onclick="cursor (1, 0)">
+					<button onclick="cursor (1, 0)" id="btn_dPad_Right" class="btn_base btn_blacks">
 						>
 					</button>
 				</div>
@@ -83,22 +83,22 @@
 				<!-- Row #3 -->
 				<div id="r3">
 					<!-- Alpha toggle button -->
-					<button onclick="toggleMode (2)">
+					<button onclick="toggleMode (2)" id="btn_alpha" class="btn_base btn_starters btn_blacks">
 						ALPHA
 					</button>
 					
 					<!-- Variable input button -->
-					<button onclick="btnToText ('X')">
+					<button onclick="btnToText ('X')" class="btn_base btn_blacks">
 						X,T,?,n
 					</button>
 					
 					<!-- Statistics functions button -->
-					<button onclick="listStatFuncs ()">
+					<button onclick="listStatFuncs ()" class="btn_base btn_blacks">
 						STAT
 					</button>
 					
 					<!-- Directional down button -->
-					<button onclick="cursor (0, -1)">
+					<button onclick="cursor (0, -1)" id="btn_dPad_Down" class="btn_base btn_blacks">
 						V
 					</button>
 				</div>
@@ -106,27 +106,27 @@
 				<!-- Row #4 -->
 				<div id="r4">
 					<!-- List of extra functions button -->
-					<button onclick="listExtraFuncs ()">
+					<button onclick="listExtraFuncs ()" class="btn_base btn_starters btn_blacks">
 						MATH
 					</button>
 					
 					<!-- List calculator applications -->
-					<button onclick="listApps ()">
+					<button onclick="listApps ()" class="btn_base btn_blacks">
 						APPS
 					</button>
 					
 					<!-- User-made apps / app developer button -->
-					<button onclick="listUserApps ()">
+					<button onclick="listUserApps ()" class="btn_base btn_blacks">
 						PRGM
 					</button>
 					
 					<!-- View memory variables button -->
-					<button onclick="listVars ()">
+					<button onclick="listVars ()" class="btn_base btn_blacks">
 						VARS
 					</button>
 					
 					<!-- Clear screen button -->
-					<button onclick="equClear ()">
+					<button onclick="equClear ()" class="btn_base btn_blacks">
 						CLR
 					</button>
 				</div>
@@ -134,27 +134,27 @@
 				<!-- Row #5 -->
 				<div id="r5">
 					<!-- Inverse button -->
-					<button onclick="btnToText ('^(-1)')">
+					<button onclick="btnToText ('^(-1)')" class="btn_base btn_starters btn_blacks">
 						x^2
 					</button>
 					
 					<!-- Sine button -->
-					<button onclick="btnToText ('sin(')">
+					<button onclick="btnToText ('sin(')" class="btn_base btn_blacks">
 						SIN
 					</button>
 					
 					<!-- Cosine button -->
-					<button onclick="btnToText ('cos(')">
+					<button onclick="btnToText ('cos(')" class="btn_base btn_blacks">
 						COS
 					</button>
 					
 					<!-- Tangent button -->
-					<button onclick="btnToText ('tan(')">
+					<button onclick="btnToText ('tan(')" class="btn_base btn_blacks">
 						TAN
 					</button>
 					
 					<!-- Exponential button -->
-					<button onclick="btnToText ('^')">
+					<button onclick="btnToText ('^')" class="btn_base btn_blacks">
 						^
 					</button>
 				</div>
@@ -162,27 +162,27 @@
 				<!-- Row #6 -->
 				<div id="r6">
 					<!-- Num Squared button -->
-					<button onclick="btnToText ('^2')">
+					<button onclick="btnToText ('^2')" class="btn_base btn_starters btn_blacks">
 						x²
 					</button>
 					
 					<!-- Comma button -->
-					<button onclick="btnToText (',')">
+					<button onclick="btnToText (',')" class="btn_base">
 						,
 					</button>
 					
 					<!-- Left parenthesis button -->
-					<button onclick="btnToText ('(')" >
+					<button onclick="btnToText ('(')" class="btn_base">
 						(
 					</button>
 					
 					<!-- Right parenthesis button -->
-					<button onclick="btnToText (')')">
+					<button onclick="btnToText (')')" class="btn_base">
 						)
 					</button>
 			
 					<!-- Divide button -->
-					<button onclick="btnToText ('/')">
+					<button onclick="btnToText ('/')" class="btn_base btn_basic_ops">
 						/
 					</button>
 				</div>
@@ -190,27 +190,27 @@
 				<!-- Row #7 -->
 				<div id="r7">
 					<!-- Log -->
-					<button onclick="btnToText ('log(')">
+					<button onclick="btnToText ('log(')" class="btn_base btn_starters btn_blacks">
 						LOG
 					</button>
 					
 					<!-- Numeric 7 button -->
-					<button onclick="btnToText (7)">
+					<button onclick="btnToText (7)" class="btn_base">
 						7
 					</button>
 					
 					<!-- Numeric 8 button -->
-					<button onclick="btnToText (8)">
+					<button onclick="btnToText (8)" class="btn_base">
 						8
 					</button>
 					
 					<!-- Numeric 9 button -->
-					<button onclick="btnToText (9)">
+					<button onclick="btnToText (9)" class="btn_base">
 						9
 					</button>
 					
 					<!-- Multiply button -->
-					<button onclick="btnToText ('*')">
+					<button onclick="btnToText ('*')" class="btn_base btn_basic_ops">
 						*
 					</button>
 				</div>
@@ -218,27 +218,27 @@
 				<!-- Row #8 -->
 				<div id="r8">
 					<!-- Natural Log -->
-					<button onclick="btnToText ('ln(')">
+					<button onclick="btnToText ('ln(')" class="btn_base btn_starters btn_blacks">
 						LN
 					</button>
 				
 					<!-- Numeric 4 button -->
-					<button onclick="btnToText (4)">
+					<button onclick="btnToText (4)" class="btn_base">
 						4
 					</button>
 					
 					<!-- Numeric 5 button -->
-					<button onclick="btnToText (5)">
+					<button onclick="btnToText (5)" class="btn_base">
 						5
 					</button>
 					
 					<!-- Numeric 6 button -->
-					<button onclick="btnToText (6)">
+					<button onclick="btnToText (6)" class="btn_base">
 						6
 					</button>
 					
 					<!-- Subtract button -->
-					<button onclick="btnToText ('-')">
+					<button onclick="btnToText ('-')" class="btn_base btn_basic_ops">
 						-
 					</button>
 				</div>
@@ -246,27 +246,27 @@
 				<!-- Row #9 -->
 				<div id="r9">
 					<!-- Store to memory -->
-					<button onclick="equStore ()">
+					<button onclick="equStore ()" class="btn_base btn_starters btn_blacks">
 						STO>
 					</button>
 					
 					<!-- Numeric 1 button -->
-					<button onclick="btnToText (1)">
+					<button onclick="btnToText (1)" class="btn_base">
 						1
 					</button>
 					
 					<!-- Numeric 2 button -->
-					<button onclick="btnToText (2)">
+					<button onclick="btnToText (2)" class="btn_base">
 						2
 					</button>
 					
 					<!-- Numeric 3 button -->
-					<button onclick="btnToText (3)">
+					<button onclick="btnToText (3)" class="btn_base">
 						3
 					</button>
 					
 					<!-- Add button -->
-					<button onclick="btnToText ('+')">
+					<button onclick="btnToText ('+')" class="btn_base btn_basic_ops">
 						+
 					</button>
 				</div>
@@ -274,27 +274,27 @@
 				<!-- Row #10 -->
 				<div id="r10">
 					<!-- On button; turn the calculator on or off -->
-					<button onclick="togglePower ()">
+					<button onclick="togglePower ()" class="btn_base btn_starters btn_blacks">
 						ON
 					</button>
 					
 					<!-- Numeric 0 button -->
-					<button onclick="btnToText (0)">
+					<button onclick="btnToText (0)" class="btn_base">
 						0
 					</button>
 					
 					<!-- Decimal button -->
-					<button onclick="btnToText ('.')">
+					<button onclick="btnToText ('.')" class="btn_base">
 						.
 					</button>
 					
 					<!-- Negative togger button -->
-					<button onclick="btnToText ('-')">
+					<button onclick="btnToText ('-')" class="btn_base">
 						(-)
 					</button>
 					
 					<!-- Enter button -->
-					<button onclick="evalEquation ()">
+					<button onclick="evalEquation ()" class="btn_base btn_basic_ops">
 						=
 					</button>
 				</div>
