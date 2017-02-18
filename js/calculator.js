@@ -54,6 +54,23 @@ function togglePower () {
 	powerState = !powerState;
 }
 
+function addCommand (s, func) {
+    if (s != null) {
+        len = s.length;
+
+        for (var i = 0; i < len; i++) {
+            appendBackBuffer (s[i]);
+        }
+        
+        slamBuffer ();
+    }
+    
+    // If there is a function sent along with the string
+    if (typeof func != "undefined") {
+        //appendCommandStack (func);
+    }
+}
+
 // Each item is 5x7, with a 1px buffer on the right and bottom. Total size: 6x8.
 function appendBackBuffer (c) {
 	// Index will be the current character slot we are drawing in
