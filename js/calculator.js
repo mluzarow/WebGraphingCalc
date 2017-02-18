@@ -7,17 +7,35 @@ var pixel = null;
 var drawBuffer = null;
 var backBuffer = [];
 var backBufferIndex = 0;
+var cmdStack = null;
 
+// After DOM loads, initialize variables
 window.onload = function () {
-	initialize (); // Init variables and components
+	initialize ();
 }
 
+/*******************************************************************************************
+** Initialize system variables.
+**
+** Function sets up variables for use in the main script file, calculator.js (this one)
+** 1. Find page elements
+** 2. Set up draw buffers / matrices
+** 3. Load character dictionary from letters.js
+** 4. Prepare canvas for default state
+********************************************************************************************/
 function initialize () {
 	screen = document.getElementById ("LCD").getContext ("2d");
 	
 	// Create screen buffer
 	drawBuffer = screen.createImageData (96, 64);
 	
+    // Blank the backBuffer
+	for (var j = 0; j < 64; j++) {
+		backBuffer [j] = new Array (96);
+	}
+	
+    
+    
 	// Create the pixel object
 	pixel = screen.createImageData (1,1);
 	// Set the color of the object
@@ -25,17 +43,12 @@ function initialize () {
 	pixel.data[1] = 255; // Green
 	pixel.data[2] = 255; // Blue
 	pixel.data[3] = 255; // Alpha
-	
-	// Toggle power to off (start in the off state) upon page load
+
+	initializeLetters (); //letters.js -> initializeLetters ()
+    
+    // Toggle power to off (start in the off state) upon page load
 	screen.fillStyle = "black";
 	screen.fillRect (0, 0, 96, 64);	
-	
-	// Blank the backBuffer
-	for (var j = 0; j < 64; j++) {
-		backBuffer [j] = new Array (96);
-	}
-	
-	initializeLetters (); //letters.js -> initializeLetters ()
 }
 
 // Turn the unit on and off
@@ -55,6 +68,7 @@ function togglePower () {
 }
 
 function addCommand (s, func) {
+    // Check to see if there is anything to draw
     if (s != null) {
         len = s.length;
 
@@ -65,7 +79,7 @@ function addCommand (s, func) {
         slamBuffer ();
     }
     
-    // If there is a function sent along with the string
+    // Check to see if there is a function to add to the stack
     if (typeof func != "undefined") {
         //appendCommandStack (func);
     }

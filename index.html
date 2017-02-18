@@ -5,6 +5,7 @@
         <link rel="stylesheet" type="text/css" href="css/main.css">
 		<script type="text/javascript" src="js/letters.js"></script>
 		<script type="text/javascript" src="js/calculator.js"></script>
+        <script type="text/javascript" src="js/functions.js"></script>
 	</head>
 	<body>
 		<!-- Calculator Frame -->
@@ -269,7 +270,7 @@
 					</button>
 					
 					<!-- Add button -->
-					<button onclick="?" class="btn_base btn_basic_ops">
+					<button onclick="addCommand ('+', new BasicOperator (ti_add (), 3))" class="btn_base btn_basic_ops">
 						+
 					</button>
 				</div>
