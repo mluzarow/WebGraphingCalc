@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta charset="UTF-8"> 
         <link rel="stylesheet" type="text/css" href="css/main.css">
+		<script type="text/javascript" src="js/letters.js"></script>
+		<script type="text/javascript" src="js/calculator.js"></script>
 	</head>
 	<body>
 		<!-- Calculator Frame -->
@@ -10,7 +13,7 @@
 			<div id="spacer"></div>
 			
 			<!-- LCD -->
-			<canvas id="LCD" height="240" width="320">
+			<canvas id="LCD" height="64" width="96">
 			
 			</canvas>
 			
@@ -20,12 +23,12 @@
 				<!-- Row #1 (weird thin buttons) -->
 				<div id="r1">	
 					<!-- Equation input button -->
-					<button onclick="?" class="btn_base btn_starters btn_thins">
+					<button onclick="appendBackBuffer ('A')" class="btn_base btn_starters btn_thins">
 						Y=
 					</button>
 					
 					<!-- Plotter options button -->
-					<button onclick="?" class="btn_base btn_thins">
+					<button onclick="slamBuffer ()" class="btn_base btn_thins">
 						WIN
 					</button>
 					
