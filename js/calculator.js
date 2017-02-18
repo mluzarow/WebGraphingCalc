@@ -90,9 +90,9 @@ function appendBackBuffer (c) {
 function slamBuffer () {
 	var global_i = 0;
 	
-	for (var i = 0; i < 96; i++) {
-		for (var j = 0; j < 64; j++) {
-			if (backBuffer [j][i] == 0) { //Draw white
+	for (var i = 0; i < 64; i++) {
+		for (var j = 0; j < 96; j++) {
+			if (backBuffer [i][j] == 1) { //Draw white
 				drawBuffer.data[global_i + 0] = 255; // R
 				drawBuffer.data[global_i + 1] = 255; // G
 				drawBuffer.data[global_i + 2] = 255; // B
@@ -107,7 +107,7 @@ function slamBuffer () {
 		}
 	}
 	
-	screen.putImageData (drawBuffer, 5, 5);
+	screen.putImageData (drawBuffer, 0, 0);
 }
 
 function testWrite () {
