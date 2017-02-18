@@ -56,21 +56,24 @@ function togglePower () {
 
 // Each item is 5x7, with a 1px buffer on the right and bottom. Total size: 6x8.
 function appendBackBuffer (c) {
-	// Find the start location for drawing
-	var rows = (16 * backBufferIndex) / 96;
+	// Index will be the current character slot we are drawing in
+	// Row index is calc'd as a floor division of index * 6 (width of a char)
+	// by 96 (max pixel width of a row)
+	var rows = Math.floor ((6 * backBufferIndex) / 96);
 	
-	while (backBufferIndex >= 16) {
-		backBufferIndex -= 16;
-	}
+	// Make sure the current index is between 0 and 15 (since we already have the row)
+	var workingBufferIndex = backBufferIndex - (16 * Math.floor (backBufferIndex / 16));
 	
-	y = rows * 8;
-	x = backBufferIndex * 6;
-	y_l = 0;
-	x_l = 0;
+	// Calc pixel coords for start location
+	var y = rows * 8;
+	var x = workingBufferIndex * 6;
+	// letter read vars
+	var y_l = 0;
+	var x_l = 0;
 	
 	letter = letterDict[c];
 	
-	// Loop through the layers of the letter
+	// Loop through the rows of the letter
 	for (var j = y; j < (y + 8); j++) {
 		// Iterate through the single layer of the letter
 		for (var i = x; i < (x + 6); i++) {
@@ -80,7 +83,6 @@ function appendBackBuffer (c) {
 		y_l++;
 		x_l = 0;
 	}
-	
 	backBufferIndex++;
 }
 
@@ -106,6 +108,30 @@ function slamBuffer () {
 	}
 	
 	screen.putImageData (drawBuffer, 5, 5);
+}
+
+function testWrite () {
+	var flippyflop = true;
+	
+	for (var i = 0; i < (96*64*4); i += 4) {
+		if (flippyflop == true) {
+			drawBuffer.data[i + 0] = 255; // R
+			drawBuffer.data[i + 1] = 255; // G
+			drawBuffer.data[i + 2] = 255; // B
+			drawBuffer.data[i + 3] = 255; // A
+			
+			flippyflop = !flippyflop;
+		} else {
+			drawBuffer.data[i + 0] = 0; // R
+			drawBuffer.data[i + 1] = 0; // G
+			drawBuffer.data[i + 2] = 0; // B
+			drawBuffer.data[i + 3] = 255; // A
+			
+			flippyflop = !flippyflop;
+		}
+	}
+	
+	screen.putImageData (drawBuffer, 0, 0);
 }
 
 
