@@ -139,21 +139,21 @@
 				<div id="r5">
 					<!-- Inverse button -->
 					<button onclick="btnToText ('^(-1)')" class="btn_base btn_starters btn_blacks">
-						x^2
+						x^-1
 					</button>
 					
 					<!-- Sine button -->
-					<button onclick="btnToText ('sin(')" class="btn_base btn_blacks">
+					<button onclick="addCommand ('sin(')" class="btn_base btn_blacks">
 						SIN
 					</button>
 					
 					<!-- Cosine button -->
-					<button onclick="btnToText ('cos(')" class="btn_base btn_blacks">
+					<button onclick="addCommand ('cos(')" class="btn_base btn_blacks">
 						COS
 					</button>
 					
 					<!-- Tangent button -->
-					<button onclick="btnToText ('tan(')" class="btn_base btn_blacks">
+					<button onclick="addCommand ('tan(')" class="btn_base btn_blacks">
 						TAN
 					</button>
 					
@@ -167,7 +167,7 @@
 				<div id="r6">
 					<!-- Num Squared button -->
 					<button onclick="?" class="btn_base btn_starters btn_blacks">
-						x²
+						x^2
 					</button>
 					
 					<!-- Comma button -->
@@ -176,17 +176,17 @@
 					</button>
 					
 					<!-- Left parenthesis button -->
-					<button onclick="?" class="btn_base">
+					<button onclick="addCommand ('(')" class="btn_base">
 						(
 					</button>
 					
 					<!-- Right parenthesis button -->
-					<button onclick="?" class="btn_base">
+					<button onclick="addCommand (')')" class="btn_base">
 						)
 					</button>
 			
 					<!-- Divide button -->
-					<button onclick="?" class="btn_base btn_basic_ops">
+					<button onclick="addCommand ('/')" class="btn_base btn_basic_ops">
 						/
 					</button>
 				</div>
@@ -214,7 +214,7 @@
 					</button>
 					
 					<!-- Multiply button -->
-					<button onclick="btnToText ('*')" class="btn_base btn_basic_ops">
+					<button onclick="addCommand ('*')" class="btn_base btn_basic_ops">
 						*
 					</button>
 				</div>
@@ -242,7 +242,7 @@
 					</button>
 					
 					<!-- Subtract button -->
-					<button onclick="?" class="btn_base btn_basic_ops">
+					<button onclick="addCommand ('-')" class="btn_base btn_basic_ops">
 						-
 					</button>
 				</div>
