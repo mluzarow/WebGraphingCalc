@@ -15,7 +15,7 @@ function subtract (a, b) {
 }
 
 function divide (a, b) {
-	return ((parseInt (a.character) / parseInt (b.character)).toString ());
+	return ((parseInt (b.character) / parseInt (a.character)).toString ());
 }
 
 function multiply (a, b) {
