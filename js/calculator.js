@@ -76,52 +76,97 @@ function clr () {
 
 
 function equ () {
-	var outStack = organizeOutput ();
-	
-	if (1 == 1) {
-		
-	}
+    // Organize the tokens into something we can process
+    var outStack = organizeOutput ();
+    // Calculate the answer
+    var answer = calcOutput (outStack);
+    // Print out the answer
+    // Draw it
+    len = answer.character.length;
+
+    for (var i = 0; i < len; i++) {
+        appendBackBuffer (answer.character [i]);
+    }
+    
+    slamBuffer ();
+}
+
+function calcOutput (stack) {
+    var answer = new Array ();
+
+    // Iterate through array until we find an op
+    while (stack.length > 0) {
+        // Pop a token from the front of the stack
+        poppedToken = stack.shift ();
+        
+        // If token is a number, place it on the answer stack. Keep doing
+        // this until we find an op token
+        if (poppedToken.order == 0) {
+            answer.push (poppedToken);
+        } else {
+            // Token is an op. Use number tokens in the answer stack to calculate
+            // the answer. After, place answer onto answer stack as number token.
+            
+            // Token is a function token (top priority)
+            if (poppedToken.order == 6) {
+                //do stuff
+            // Token is some other op; take 2 numbers
+            } else if (poppedToken.order < 6) {
+                a = answer.pop ();
+                b = answer.pop ();
+                
+                answer.push (new token (poppedToken.func (a, b), 0));
+            } 
+        }
+    }
+    
+    return (answer.pop ());
 }
 
 function organizeOutput () {
-	// Pop from queue; sort order = 0 (numbers) into output array and order > 0 (ops)
-	// into op stack
-	var opStack = new Array ();
-	var outStack = new Array ();
-	
-	// Continue popping until we have every token
-	while (infixQueue.length > 0) {
-		// Chheck to see if token is number or op
-		var poppedToken = infixQueue.pop ();
-		
-		if (poppedToken.order == 0) {
-			outStack.push (poppedToken);
-		} else {
-			// Popped token is an op; check to see if the order of stacked ops agrees.
-			var opPoppedToken = opStack.pop ();
-			
-			// Check if opStack is not empty
-			if (opPoppedToken != null) {
-				// Not empty; check orders. If order of existing token is higher,
-				// dump contents onto outStack
-				if (opPoppedToken.order > poppedToken.order) {
-					// Order incorrect; dump stack
-					while (opStack.length > 0) {
-						outStack.push (opStack.pop ());
-					}
-				} else {
-					// Order is fine, so add both back
-					opStack.push (opPoppedToken);
-					opStack.push (poppedToken);
-				}
-			} else {
-				// It was empty, so just put it in
-				opStack.push (poppedToken);
-			}
-		}
-	}
-	
-	return (outStack);
+    // Pop from queue; sort order = 0 (numbers) into output array and order > 0 (ops)
+    // into op stack
+    var opStack = new Array ();
+    var outStack = new Array ();
+
+    // Continue popping from start of queue until we have every token
+    while (infixQueue.length > 0) {
+        // Check to see if token is number or op
+        var poppedToken = infixQueue.shift ();
+        
+        if (poppedToken.order == 0) {
+            outStack.push (poppedToken);
+        } else {
+            // Popped token is an op; check to see if the order of stacked ops agrees.
+            var opPoppedToken = opStack.pop ();
+            
+            // Check if opStack is not empty
+            if (opPoppedToken != null) {
+                // Not empty; check orders. If order of existing token is higher,
+                // dump contents onto outStack
+                if (opPoppedToken.order > poppedToken.order) {
+                    // Order incorrect; dump stack
+                    while (opStack.length > 0) {
+                        outStack.push (opStack.pop ());
+                    }
+                } else {
+                    // Order is fine, so add both back
+                    opStack.push (opPoppedToken);
+                    opStack.push (poppedToken);
+                }
+            } else {
+                // It was empty, so just put it in
+                opStack.push (poppedToken);
+            }
+        }
+    }
+
+    // Pop any remaining ops in the op stack
+    while (opStack.length > 0) {
+        outStack.push (opStack.pop ());
+    }
+
+    return (outStack);
 }
 
 // Turn the unit on and off
@@ -160,18 +205,18 @@ function addCommand (t) {
     
     // If there is a token here
     if (poppedToken != null) {
-        // If the token is a number
-        if (poppedToken.order == 0) {
+        // If both tokens are numbers
+        if (poppedToken.order == 0 && t.order == 0) {
             // Collapse this new token into the one before it (they are both numbers)
 			t.character = poppedToken.character + t.character;
         } else {
 			// Popped token is an op, so add it back
-			infixQueue.unshift (poppedToken);
+			infixQueue.push (poppedToken);
 		}
     }
     
     // Add to infix command stack
-    infixQueue.unshift (t);
+    infixQueue.push (t);
 }
 
 

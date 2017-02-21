@@ -7,7 +7,7 @@ class token {
 }
 
 function add (a, b) {
-    return (a + b);
+    return ((parseInt (a.character) + parseInt (b.character)).toString ());
 }
 
 function subtract (a, b) {
