@@ -11,15 +11,15 @@ function add (a, b) {
 }
 
 function subtract (a, b) {
-	return (a - b);
+	return ((parseInt (b.character) - parseInt (a.character)).toString ());
 }
 
 function divide (a, b) {
-	return (a / b);
+	return ((parseInt (a.character) / parseInt (b.character)).toString ());
 }
 
 function multiply (a, b) {
-	return (a * b);
+	return ((parseInt (a.character) * parseInt (b.character)).toString ());
 }
 
 function log (a) {
