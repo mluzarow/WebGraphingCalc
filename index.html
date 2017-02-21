@@ -6,6 +6,7 @@
 		<script type="text/javascript" src="js/letters.js"></script>
 		<script type="text/javascript" src="js/calculator.js"></script>
         <script type="text/javascript" src="js/functions.js"></script>
+        <script type="text/javascript" src="js/drawing.js"></script>
 	</head>
 	<body>
 		<!-- Calculator Frame -->
@@ -24,12 +25,12 @@
 				<!-- Row #1 (weird thin buttons) -->
 				<div id="r1">	
 					<!-- Equation input button -->
-					<button onclick="appendBackBuffer ('A')" class="btn_base btn_starters btn_thins">
+					<button onclick="?" class="btn_base btn_starters btn_thins">
 						Y=
 					</button>
 					
 					<!-- Plotter options button -->
-					<button onclick="slamBuffer ()" class="btn_base btn_thins">
+					<button onclick="?" class="btn_base btn_thins">
 						WIN
 					</button>
 					
@@ -130,7 +131,7 @@
 					</button>
 					
 					<!-- Clear screen button -->
-					<button onclick="addCommand (null, clr ())" class="btn_base btn_blacks">
+					<button onclick="clr ()" class="btn_base btn_blacks">
 						CLR
 					</button>
 				</div>
@@ -143,17 +144,17 @@
 					</button>
 					
 					<!-- Sine button -->
-					<button onclick="addCommand ('sin(')" class="btn_base btn_blacks">
+					<button onclick="addCommand (new token ('sin(', 6), sine ())" class="btn_base btn_blacks">
 						SIN
 					</button>
 					
 					<!-- Cosine button -->
-					<button onclick="addCommand ('cos(')" class="btn_base btn_blacks">
+					<button onclick="addCommand (new token ('cos(', 6, cosine ()))" class="btn_base btn_blacks">
 						COS
 					</button>
 					
 					<!-- Tangent button -->
-					<button onclick="addCommand ('tan(')" class="btn_base btn_blacks">
+					<button onclick="addCommand (new token ('tan(', 6, tangent ()))" class="btn_base btn_blacks">
 						TAN
 					</button>
 					
@@ -186,7 +187,7 @@
 					</button>
 			
 					<!-- Divide button -->
-					<button onclick="addCommand ('/')" class="btn_base btn_basic_ops">
+					<button onclick="addCommand (new token ('/', 2, divide ()))" class="btn_base btn_basic_ops">
 						/
 					</button>
 				</div>
@@ -194,27 +195,27 @@
 				<!-- Row #7 -->
 				<div id="r7">
 					<!-- Log -->
-					<button onclick="?" class="btn_base btn_starters btn_blacks">
+					<button onclick="addCommand (new token ('log(', 6, log ()))" class="btn_base btn_starters btn_blacks">
 						LOG
 					</button>
 					
 					<!-- Numeric 7 button -->
-					<button onclick="addCommand ('7')" class="btn_base">
+					<button onclick="addCommand (new token ('7', 0))" class="btn_base">
 						7
 					</button>
 					
 					<!-- Numeric 8 button -->
-					<button onclick="addCommand ('8')" class="btn_base">
+					<button onclick="addCommand (new token ('8', 0))" class="btn_base">
 						8
 					</button>
 					
 					<!-- Numeric 9 button -->
-					<button onclick="addCommand ('9')" class="btn_base">
+					<button onclick="addCommand (new token ('9', 0))" class="btn_base">
 						9
 					</button>
 					
 					<!-- Multiply button -->
-					<button onclick="addCommand ('*')" class="btn_base btn_basic_ops">
+					<button onclick="addCommand (new token ('*', 2, multiply ()))" class="btn_base btn_basic_ops">
 						*
 					</button>
 				</div>
@@ -222,27 +223,27 @@
 				<!-- Row #8 -->
 				<div id="r8">
 					<!-- Natural Log -->
-					<button onclick="?" class="btn_base btn_starters btn_blacks">
+					<button onclick="addCommand (new token ('ln(', 6, naturalLog ()))" class="btn_base btn_starters btn_blacks">
 						LN
 					</button>
 				
 					<!-- Numeric 4 button -->
-					<button onclick="addCommand ('4')" class="btn_base">
+					<button onclick="addCommand (new token ('4', 0))" class="btn_base">
 						4
 					</button>
 					
 					<!-- Numeric 5 button -->
-					<button onclick="addCommand ('5')" class="btn_base">
+					<button onclick="addCommand (new token ('5', 0))" class="btn_base">
 						5
 					</button>
 					
 					<!-- Numeric 6 button -->
-					<button onclick="addCommand ('6')" class="btn_base">
+					<button onclick="addCommand (new token ('6', 0))" class="btn_base">
 						6
 					</button>
 					
 					<!-- Subtract button -->
-					<button onclick="addCommand ('-')" class="btn_base btn_basic_ops">
+					<button onclick="addCommand (new token ('-', 1, subtract ()))" class="btn_base btn_basic_ops">
 						-
 					</button>
 				</div>
@@ -255,22 +256,22 @@
 					</button>
 					
 					<!-- Numeric 1 button -->
-					<button onclick="addCommand ('1')" class="btn_base">
+					<button onclick="addCommand (new token ('1', 0))" class="btn_base">
 						1
 					</button>
 					
 					<!-- Numeric 2 button -->
-					<button onclick="addCommand ('2')" class="btn_base">
+					<button onclick="addCommand (new token ('2', 0))" class="btn_base">
 						2
 					</button>
 					
 					<!-- Numeric 3 button -->
-					<button onclick="addCommand ('3')" class="btn_base">
+					<button onclick="addCommand (new token ('3', 0))" class="btn_base">
 						3
 					</button>
 					
 					<!-- Add button -->
-					<button onclick="addCommand ('+', new BasicOperator (ti_add (), 3))" class="btn_base btn_basic_ops">
+					<button onclick="addCommand (new token ('+', 1, add  ()))" class="btn_base btn_basic_ops">
 						+
 					</button>
 				</div>
@@ -283,7 +284,7 @@
 					</button>
 					
 					<!-- Numeric 0 button -->
-					<button onclick="addCommand ('0')" class="btn_base">
+					<button onclick="addCommand (new token ('0', 0))" class="btn_base">
 						0
 					</button>
 					
@@ -298,7 +299,7 @@
 					</button>
 					
 					<!-- Enter button -->
-					<button onclick="?" class="btn_base btn_basic_ops">
+					<button onclick="equ ()" class="btn_base btn_basic_ops">
 						=
 					</button>
 				</div>
