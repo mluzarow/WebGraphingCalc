@@ -61,6 +61,10 @@ li a:hover, #dropdown:hover #dropdown_btn {
     background-color: #f1f1f1
 }
 
+#dropdown:hover #dropdown_content {
+    display: block;
+}
+
 /* Spans all buttons, offering a basic button styling and padding. */
 .btn_base {
 	margin-left:5px;
