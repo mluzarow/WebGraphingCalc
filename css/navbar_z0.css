@@ -1,0 +1,71 @@
+/* Navigation bar styling */
+#nb_frame {
+    margin: 0px;
+    padding: 0px;
+    font-size: 2em;
+    background-color: black;
+    overflow: hidden;
+}
+
+#logo {
+    float: left;
+    text-decoration: none;
+    padding: 14px 16px;
+    color: grey;
+}
+
+#logo div {
+    background-color: red;
+    display: inline-block;
+    padding-bottom: 4px;
+    border-radius: 4px;
+}
+
+#logo span {
+    color: black;
+}
+
+ul {
+    font-family: "Arial";
+    margin: 0px;
+    margin-right: 10px;
+    padding: 0px;
+    float: right;
+    display: inline-block;
+    list-style-type: none;
+}
+
+li {
+    text-align: center;
+    padding: 14px 12px;
+    float: left;
+    color: grey;
+} 
+
+li a {
+    text-decoration: none;
+    color: grey;
+}
+
+li a:hover {
+    border-top: solid red;
+    color: lightgrey;
+}
+
+/* Fancy bars */
+#db_spacer_1 {
+    height: 1px;
+    background-color: black;
+    border-bottom: solid red;
+}
+
+#db_spacer_2 {
+    height: 5px;
+    background-color: black;
+}
+
+#db_spacer_3 {
+    height: 15px;
+    background-color: black;
+    border-top: solid red;
+}
