@@ -18,6 +18,14 @@ window.onload = function () {
 	initialize ();
 }
 
+class token {
+    constructor (c, o, f=null) {
+        this.character = c;
+        this.order = o;
+        this.func = f;
+    }
+}
+
 class Node {
     constructor (value, next) {
         this.value = value;
@@ -63,18 +71,11 @@ function initialize () {
 	screen.fillRect (0, 0, 96, 64);	
 }
 
-// Clears canvas, clears canvas buffer, maintains answer (if one exists)
-function clr () {
-    backBufferIndex = 0;
-    
-    for (var j = 0; j < 64; j++) {
-		backBuffer [j] = new Array (96);
-	}
-    
-    slamBuffer ()
-}
-
-
+/********************************************************************************************
+**
+** Fired upon pressing "=" key; calls below processing functions to calculate answer.
+**
+********************************************************************************************/
 function equ () {
     // Organize the tokens into something we can process
     var outStack = organizeOutput ();
@@ -91,6 +92,11 @@ function equ () {
     slamBuffer ();
 }
 
+/********************************************************************************************
+**
+** Solves the processed input, reading the outStack from bottom to top.
+**
+********************************************************************************************/
 function calcOutput (stack) {
     var answer = new Array ();
 
@@ -123,6 +129,13 @@ function calcOutput (stack) {
     return (answer.pop ());
 }
 
+/********************************************************************************************
+**
+** Organize the content of the infixQueue into two stacks, "opStack" for operators and 
+** "outStack" for numbers. Once all tokens from infixQueue are exhausted, move all operators
+** from opStack onto the output stack, outStack. Uses Shunting-yard algorithm.
+**
+********************************************************************************************/
 function organizeOutput () {
     // Pop from queue; sort order = 0 (numbers) into output array and order > 0 (ops)
     // into op stack
@@ -169,23 +182,22 @@ function organizeOutput () {
     return (outStack);
 }
 
-// Turn the unit on and off
-function togglePower () {
-	// If the unit is off...
-	if (powerState == false) {
-		// Turn it on
-		screen.fillStyle = "green";
-	// If the unit is on...
-	} else {
-		// Turn if off
-		screen.fillStyle = "black";
-	}
-	screen.fillRect (0, 0, 96, 64);
-	// Flip the power flag
-	powerState = !powerState;
-}
-
-// Commands are added as tokens
+/********************************************************************************************
+**
+** Adds a command token (token object) corresponding to the pressed button to the token
+** queue "infixQueue". 
+**
+** Token object consists of:
+** 1. String of characters E.G. "sin(" or "1".
+** 2. Function that should fire upon the button's operation.
+**
+** If the token has characters included, they are drawn to the screen. 
+** 
+** If the last token before the most recent token contained a numeric character, such as
+** "1", consecutive numbers (E.G. 1, 2, 3, 4) will be collapsed into one token with one
+** number (E.G. 1234).
+**
+********************************************************************************************/
 function addCommand (t) {
     // Check to make sure there is something to draw
     if (t.character != null) {
@@ -219,6 +231,29 @@ function addCommand (t) {
     infixQueue.push (t);
 }
 
+// Clears canvas, clears canvas buffer, maintains answer (if one exists)
+function clr () {
+    backBufferIndex = 0;
+    
+    for (var j = 0; j < 64; j++) {
+		backBuffer [j] = new Array (96);
+	}
+    
+    slamBuffer ()
+}
 
-
-
+// Turn the unit on and off
+function togglePower () {
+	// If the unit is off...
+	if (powerState == false) {
+		// Turn it on
+		screen.fillStyle = "green";
+	// If the unit is on...
+	} else {
+		// Turn if off
+		screen.fillStyle = "black";
+	}
+	screen.fillRect (0, 0, 96, 64);
+	// Flip the power flag
+	powerState = !powerState;
+}

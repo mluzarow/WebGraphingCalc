@@ -1,11 +1,3 @@
-class token {
-    constructor (c, o, f=null) {
-        this.character = c;
-        this.order = o;
-        this.func = f;
-    }
-}
-
 function add (a, b) {
     return ((parseInt (a.character) + parseInt (b.character)).toString ());
 }
