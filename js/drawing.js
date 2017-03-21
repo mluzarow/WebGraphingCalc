@@ -10,15 +10,24 @@ var LCD_PIXEL_WIDTH = 96;
 var LCD_PIXEL_HEIGHT = 64;
 var LETTER_PIXEL_WIDTH = 6;
 var LETTER_PIXEL_HEIGHT = 8;
+var MAX_LETTERS_ACROSS = Math.floor (LCD_PIXEL_WIDTH / LETTER_PIXEL_WIDTH);
+var MAX_LETTERS_DOWN = Math.floor (LCD_PIXEL_HEIGHT / LETTER_PIXEL_HEIGHT);
 
 // Each item is 5x7, with a 1px buffer on the right and bottom. Total size: 6x8.
 function appendBackBuffer (c) {
     // backBufferIndex indicates how many letters currently reside on screen, used to
     // find the next draw position. Index is a value 0 to (16 * 8).
 
-    // Calculate row on which to draw
+    // Calculate row on which to draw (0 to 7)
     var rows = Math.floor ((LETTER_PIXEL_WIDTH * backBufferIndex) / LCD_PIXEL_WIDTH);
-
+    
+    // Check for rollover
+    if (rows >= MAX_LETTERS_DOWN) {
+        rollover ();
+        // Calculate row again
+        rows = Math.floor ((LETTER_PIXEL_WIDTH * backBufferIndex) / LCD_PIXEL_WIDTH);
+    }
+    
     // Make sure the current index is between 0 and 15 (since we already have the row)
     var workingBufferIndex = backBufferIndex - (16 * Math.floor (backBufferIndex / 16));
 
@@ -31,8 +40,6 @@ function appendBackBuffer (c) {
 
     // Extract matrix data from dictionary
     letter = letterDict[c];
-
-    // Copy letter data from the dictionary into the back buffer
 
     // Iterate through the rows of the letter
     for (var j = y; j < (y + LETTER_PIXEL_HEIGHT); j++) {
@@ -47,6 +54,20 @@ function appendBackBuffer (c) {
 
     // Add 1 to index to indicate addition of letter
     backBufferIndex++;
+}
+
+// Scrolls the page down
+function rollover () {
+    // pop the top 8 layers off (row 1)
+    // append 8 new layers to the bottom (row 8)
+    for (var i = 0; i < LETTER_PIXEL_HEIGHT; i++) {
+        backBuffer.shift ();
+        backBuffer.push (new Array (LETTER_PIXEL_WIDTH * LCD_PIXEL_WIDTH));
+    }
+    // Draw the update
+    slamBuffer ();
+    // Reposition draw index
+    backBufferIndex -= MAX_LETTERS_ACROSS;
 }
 
 // Special version of the appender that appends a formatted answer
@@ -92,6 +113,14 @@ function appendBackBuffer_Answer (s) {
     // We should be on a new line unless something very bad happened.
     // recalibrate coords
     rows = Math.floor ((LETTER_PIXEL_WIDTH * backBufferIndex) / LCD_PIXEL_WIDTH);
+    
+    // Check for rollover
+    if (rows >= MAX_LETTERS_DOWN) {
+        rollover ();
+        // Calculate row again
+        rows = Math.floor ((LETTER_PIXEL_WIDTH * backBufferIndex) / LCD_PIXEL_WIDTH);
+    }
+    
     workingBufferIndex = backBufferIndex - (16 * Math.floor (backBufferIndex / 16));
     y = rows * LETTER_PIXEL_HEIGHT;
     x = workingBufferIndex * LETTER_PIXEL_WIDTH;
