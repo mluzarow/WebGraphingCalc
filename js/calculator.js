@@ -154,9 +154,14 @@ function organizeOutput () {
                 // dump contents onto outStack
                 if (opPoppedToken.order > poppedToken.order) {
                     // Order incorrect; dump stack
+                    // Put the recently popped op token onto outStack
+                    outStack.push (opPoppedToken);
+                    // Put the rest of the op tokens onto outStack
                     while (opStack.length > 0) {
                         outStack.push (opStack.pop ());
                     }
+                    // Place the new op token on opStack
+                    opStack.push (poppedToken);
                 } else {
                     // Order is fine, so add both back
                     opStack.push (opPoppedToken);
