@@ -49,6 +49,82 @@ function appendBackBuffer (c) {
     backBufferIndex++;
 }
 
+// Special version of the appender that appends a formatted answer
+function appendBackBuffer_Answer (s) {
+    // Calculate row on which to draw
+    var rows = Math.floor ((LETTER_PIXEL_WIDTH * backBufferIndex) / LCD_PIXEL_WIDTH);
+    
+    // Make sure the current index is between 0 and 15 (since we already have the row)
+    var workingBufferIndex = backBufferIndex - (16 * Math.floor (backBufferIndex / 16));
+
+    // Calculate top left pixel coordinates for letter draw
+    var y = rows * LETTER_PIXEL_HEIGHT;
+    var x = workingBufferIndex * LETTER_PIXEL_WIDTH;
+    // Letter data draw coordinates
+    var y_l = 0;
+    var x_l = 0;
+    
+    var space = letterDict [" "];
+    
+    // blank the rest of the existing row with spaces
+    while (workingBufferIndex < 16) {
+        // Iterate through the rows of the letter
+        for (var j = y; j < (y + LETTER_PIXEL_HEIGHT); j++) {
+            // Iterate through the single layer of the letter
+            for (var i = x; i < (x + LETTER_PIXEL_WIDTH); i++) {
+                backBuffer[j][i] = space [y_l][x_l]
+                x_l++;
+            }
+            y_l++;
+            x_l = 0;
+        }
+        // Blank letter draw coords
+        y_l = 0;
+        x_l = 0;
+        // Increment the draw index
+        workingBufferIndex++;
+        // calibrate the x axis draw position
+        x = workingBufferIndex * LETTER_PIXEL_WIDTH;
+        // calibrate data position
+        backBufferIndex++;
+    }
+    
+    // We should be on a new line unless something very bad happened.
+    // recalibrate coords
+    rows = Math.floor ((LETTER_PIXEL_WIDTH * backBufferIndex) / LCD_PIXEL_WIDTH);
+    workingBufferIndex = backBufferIndex - (16 * Math.floor (backBufferIndex / 16));
+    y = rows * LETTER_PIXEL_HEIGHT;
+    x = workingBufferIndex * LETTER_PIXEL_WIDTH;
+    
+    // Draw spaces until we reach enough space to draw answer
+    while (workingBufferIndex < (16 - s.length)) {
+        // Iterate through the rows of the letter
+        for (var j = y; j < (y + LETTER_PIXEL_HEIGHT); j++) {
+            // Iterate through the single layer of the letter
+            for (var i = x; i < (x + LETTER_PIXEL_WIDTH); i++) {
+                backBuffer[j][i] = space [y_l][x_l]
+                x_l++;
+            }
+            y_l++;
+            x_l = 0;
+        }
+        // Blank letter draw coords
+        y_l = 0;
+        x_l = 0;
+        // Increment the draw index
+        workingBufferIndex++;
+        // calibrate the x axis draw position
+        x = workingBufferIndex * LETTER_PIXEL_WIDTH;
+        // calibrate data position
+        backBufferIndex++;
+    }
+    
+    // draw answer
+    for (var i = 0; i < s.length; i++) {
+        appendBackBuffer (s [i]);
+    }
+}
+
 // Writes the backBuffer matrix into the imageData format
 function slamBuffer () {
     var global_i = 0;

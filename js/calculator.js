@@ -82,12 +82,7 @@ function equ () {
     // Calculate the answer
     var answer = calcOutput (outStack);
     // Print out the answer
-    // Draw it
-    len = answer.character.length;
-
-    for (var i = 0; i < len; i++) {
-        appendBackBuffer (answer.character [i]);
-    }
+    appendBackBuffer_Answer (answer.character);
     
     slamBuffer ();
 }
@@ -230,6 +225,12 @@ function addCommand (t) {
     // Add to infix command stack
     infixQueue.push (t);
 }
+
+/********************************************************************************************
+**
+** Misc button functions
+**
+********************************************************************************************/
 
 // Clears canvas, clears canvas buffer, maintains answer (if one exists)
 function clr () {
