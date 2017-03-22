@@ -33,6 +33,18 @@ class Node {
     }
 }
 
+/***************************
+** Token tiers
+**
+** 0: Static number
+** 1: Ops + -
+** 2: Ops / *
+** 3: Ops ^ ^-1 ^2 sqrt(
+** 4: brackets ( )
+** 5:
+** 6: funcs sin( log( etc
+*****************************/
+
 /*******************************************************************************************
 ** Initialize system variables.
 **
@@ -110,7 +122,9 @@ function calcOutput (stack) {
             
             // Token is a function token (top priority)
             if (poppedToken.order == 6) {
-                //do stuff
+                a = answer.pop ();
+                
+                answer.push (new token (poppedToken.func (a), 0));
             // Token is some other op; take 2 numbers
             } else if (poppedToken.order < 6) {
                 a = answer.pop ();
@@ -201,13 +215,8 @@ function organizeOutput () {
 function addCommand (t) {
     // Check to make sure there is something to draw
     if (t.character != null) {
-        // Draw it
-        len = t.character.length;
-
-        for (var i = 0; i < len; i++) {
-            appendBackBuffer (t.character [i]);
-        }
-        
+        // Append to buffer & draw
+        appendBackBuffer (t.character);     
         slamBuffer ();
     }
     
