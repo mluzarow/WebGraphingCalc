@@ -1,372 +1,1275 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.5.3/math.min.js">
-		</script>
-	</head>
-	
-	<body>
-		<script>
-			// Token stack
-			var stack = new Array ();
-			// Power toggle
-			var powerState = false
-		
-			// Print key strokes
-			function btnToText (char) {
-				// Make sure the power is on
-				if (powerState == true) {
-					var LCD = document.getElementById ("output");
-					LCD.textContent += char;
-				}
-			}
-			
-			// Eval the equation; it's like magic
-			function evalEquation () {
-				// Make sure the power is on
-				if (powerState == true) {
-					var LCD = document.getElementById ("output");
-					LCD.textContent = math.eval (LCD.textContent);
-				}
-			}
-			
-			// Clear the LCD
-			function equClear () {
-			    var LCD = document.getElementById ("output");
-			    LCD.textContent = "";
-			}
-			
-			// Cut off the last character in the LCD string
-			function equDelete () {
-				// Make sure the power is on
-				if (powerState == true) {
-					var LCD = document.getElementById ("output");
-					LCD.textContent = LCD.textContent.substring (0, LCD.textContent.length - 1);
-				}
-			}
-			
-			// Turn the unit on and off
-			function togglePower () {
-				var screen = document.getElementById ("LCD").getContext ("2d");
-			    
-				// If the unit is off...
-				if (powerState == false) {
-					// Turn it on
-					screen.fillStyle = "green";
-				// If the unit is on...
-				} else {
-					// Turn if off
-					screen.fillStyle = "black";
-				}
-				screen.fillRect (0, 0, 320, 240);
-				// Flip the power flag
-				powerState = !powerState;
-			}
-		</script>
+<head>
+    <meta charset="UTF-8">
+    <title>Apps - Web Graphing Calculator</title>
+        
+    <style>
+        /**
+         * Description: Styling file for index.html of WebGraphingCalc.
+         * Version: 1.1.0
+         * Last update: 2017/03/19
+         **/
 
-		
+        /* Basic page theme */ 
+         body {
+            background-color: black;
+            margin: 0px;
+        }
 
-		<!-- Calculator frame -->
-		<div id="bg" style="background : #000077; width : 350px; height : 700px; margin: 50px auto;">
-		    
-		    <!-- Spacer -->
-			<div style="height:15px;">
-			</div>
-			
-			<!-- LCD -->
-			<canvas id="LCD" height="240" width="320" style="margin-left:15px; border:1px solid white;">
-			    
-			</canvas>
-			
-			<!-- Button panel -->
-			<div id="panel">
-				
-				<div>
-				    <!-- Equation input button -->
-					<button onclick="?" style="margin-left:25px; width:50px; height:30px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:grey; border:grey;">
-						Y=
-					</button>
-					
-					<!-- Plotter options button -->
-					<button onclick="?" style="margin-left:5px; width:50px; height:30px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:grey; border:grey;">
-						WIN
-					</button>
-					
-					<!-- Plotter zoom button -->
-					<button onclick="?" style="margin-left:5px; width:50px; height:30px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:grey; border:grey;">
-						ZOOM
-					</button>
-					
-					<!-- Plotter equation trace button -->
-					<button onclick="?" style="margin-left:5px; width:50px; height:30px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:grey; border:grey;">
-						TRACE
-					</button>
-					
-					<!-- Plotter plot button -->
-					<button onclick="?" style="margin-left:5px; width:50px; height:30px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:grey; border:grey;">
-						PLOT
-					</button>
-				</div>
-				
-			    <div>
-			        <!-- Directional up button -->
-					<button onclick="cursor (0, 1)" style="margin-left:230px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:grey; border:grey;">
-						^
-					</button>
-			    </div>
-				
-				<!-- Button row #-4 -->
-				<div id="r997">
-				    <!-- Alternate mode toggle button -->
-					<button onclick="toggleMode (1)" style="margin-left:25px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:lightblue; border:grey;">
-						2nd
-					</button>
-					
-					<!-- Configurations button -->
-					<button onclick="btnToText ('X')" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
-						MODE
-					</button>
-					
-					<!-- Delete button -->
-		            <button onclick="equDelete ()" id="btn_del" style="width:50px; height:50px; margin-left:5px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
-			            DEL
-		            </button>
-		            
-		            <!-- Directional left button -->
-					<button onclick="cursor (-1, 0)" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:grey; border:grey;">
-						&lt;
-					</button>
-					
-					<!-- Directional right button -->
-					<button onclick="cursor (1, 0)" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:grey; border:grey;">
-						>
-					</button>
-				</div>
-				
-				<!-- Button row #-3 -->
-				<div id="r998">
-					<!-- Alpha toggle button -->
-					<button onclick="toggleMode (2)" style="margin-left:25px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:green; border:grey;">
-						ALPHA
-					</button>
-					
-					<!-- Variable input button -->
-					<button onclick="btnToText ('X')" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
-						X,T,?,n
-					</button>
-					
-					<!-- Statistics functions button -->
-					<button onclick="listStatFuncs ()" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
-						STAT
-					</button>
-					
-					<!-- Directional down button -->
-					<button onclick="cursor (0, -1)" style="margin-left:35px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:grey; border:grey;">
-						V
-					</button>
-				</div>
-				
-				<!-- Button row #-2 -->
-				<div id="r999">
-					 <!-- List of extra functions button -->
-					<button onclick="listExtraFuncs ()" style="margin-left:25px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
-						MATH
-					</button>
-					
-					<!-- List calculator applications -->
-					<button onclick="listApps ()" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
-						APPS
-					</button>
-					
-					<!-- User-made apps / app developer button -->
-					<button onclick="listUserApps ()" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
-						PRGM
-					</button>
-					
-					<!-- View memory variables button -->
-					<button onclick="listVars ()" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
-						VARS
-					</button>
-					
-					<!-- Clear screen button -->
-					<button onclick="equClear ()" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
-						CLR
-					</button>
-				</div>
-				
-				<!-- Button row #-1 -->
-				<div id="r0">
-					
-					<!-- Inverse button -->
-					<button onclick="btnToText ('^(-1)')" style="margin-left:25px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
-						x?¹
-					</button>
-					
-					<!-- Sine button -->
-					<button onclick="btnToText ('sin(')" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
-						SIN
-					</button>
-					
-					<!-- Cosine button -->
-					<button onclick="btnToText ('cos(')" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
-						COS
-					</button>
-					
-					<!-- Tangent button -->
-					<button onclick="btnToText ('tan(')" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
-						TAN
-					</button>
-					
-					<!-- Exponential button -->
-					<button onclick="btnToText ('^')" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
-						^
-					</button>
-				</div>
-			
-				<!-- Button row #1 -->
-				<div id="r1">
-					
-					<!-- Num Squared button -->
-					<button onclick="btnToText ('^2')" style="margin-left:25px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
-						x²
-					</button>
-					
-					<!-- Comma button -->
-					<button onclick="btnToText (',')" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
-						,
-					</button>
-					
-					<!-- Left parenthesis button -->
-					<button onclick="btnToText ('(')" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
-						(
-					</button>
-					
-					<!-- Right parenthesis button -->
-					<button onclick="btnToText (')')" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
-						)
-					</button>
-			
-					<!-- Divide button -->
-					<button onclick="btnToText ('/')" id="btn_div" style="width:50px; height:50px; margin-left:5px; border-radius:4px; font-size:24px; cursor:pointer; color:white; background:grey; border:grey;">
-						/
-					</button>
-				</div>
-				
-				<!-- Button row #2 -->
-				<div id="r2">
-					
-					<!-- Log -->
-					<button onclick="btnToText ('log(')" style="margin-left:25px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
-						LOG
-					</button>
-					
-					<!-- Numeric 7 button -->
-					<button onclick="btnToText (7)" id="btn_7" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:24px; cursor:pointer;">
-						7
-					</button>
-					
-					<!-- Numeric 8 button -->
-					<button onclick="btnToText (8)" id="btn_8" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:24px; cursor:pointer;">
-						8
-					</button>
-					
-					<!-- Numeric 9 button -->
-					<button onclick="btnToText (9)" id="btn_9" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:24px; cursor:pointer;">
-						9
-					</button>
-					
-					<!-- Multiply button -->
-					<button onclick="btnToText ('*')" id="btn_mult" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:24px; cursor:pointer; color:white; background:grey; border:grey;">
-						*
-					</button>
-				</div>
-				
-				<!-- Button row #3 -->
-				<div id="r2">
-				
-					<!-- Natural Log -->
-					<button onclick="btnToText ('ln(')" style="margin-left:25px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
-						LN
-					</button>
-				
-					<!-- Numeric 4 button -->
-					<button onclick="btnToText (4)" id="btn_4" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:24px; cursor:pointer;">
-						4
-					</button>
-					
-					<!-- Numeric 5 button -->
-					<button onclick="btnToText (5)" id="btn_5" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:24px; cursor:pointer;">
-						5
-					</button>
-					
-					<!-- Numeric 6 button -->
-					<button onclick="btnToText (6)" id="btn_6" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:24px; cursor:pointer;">
-						6
-					</button>
-					
-					<!-- Subtract button -->
-					<button onclick="btnToText ('-')" id="btn_sub" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:24px; cursor:pointer; color:white; background:grey; border:grey;">
-						-
-					</button>
-				</div>
-				
-				<!-- Button row #4 -->
-				<div id="r4">
-					
-					<!-- Store to memory -->
-					<button onclick="equStore ()" style="margin-left:25px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
-						STO>
-					</button>
-					
-					<!-- Numeric 1 button -->
-					<button onclick="btnToText (1)" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:24px; cursor:pointer;">
-						1
-					</button>
-					
-					<!-- Numeric 2 button -->
-					<button onclick="btnToText (2)" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:24px; cursor:pointer;">
-						2
-					</button>
-					
-					<!-- Numeric 3 button -->
-					<button onclick="btnToText (3)" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:24px; cursor:pointer;">
-						3
-					</button>
-					
-					<!-- Add button -->
-					<button onclick="btnToText ('+')" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:24px; cursor:pointer; color:white; background:grey; border:grey;">
-						+
-					</button>
-				</div>
-				
-				<!-- Button row #5 -->
-				<div id="r5">
-					<!-- On button; turn the calculator on or off -->
-					<button onclick="togglePower ()" style="margin-left:25px; width:50px; height:50px; border-radius:4px; font-size:14px; cursor:pointer; color:white; background:black; border:grey;">
-						ON
-					</button>
-					
-					<!-- Numeric 0 button -->
-					<button onclick="btnToText (0)" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:24px; cursor:pointer;">
-						0
-					</button>
-					
-					<!-- Decimal button -->
-					<button onclick="btnToText ('.')" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:24px; cursor:pointer;">
-						.
-					</button>
-					
-					<!-- Negative togger button -->
-					<button onclick="btnToText ('-')" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:24px; cursor:pointer;">
-						(-)
-					</button>
-					
-					<!-- Enter button -->
-					<button onclick="evalEquation ()" style="margin-left:5px; width:50px; height:50px; border-radius:4px; font-size:24px; cursor:pointer; color:white; background:grey; border:grey;">
-						=
-					</button>
-				</div>
-			</div>
-		</div>
-	</body>
+        /* Spans all buttons, offering a basic button styling and padding. */
+        .btn_base {
+            margin-left:5px;
+            width:50px;
+            height:50px;
+            border-radius:4px;
+            font-size:24px;
+            cursor:pointer;
+        }
+
+        /* Used with buttons on the left-most side; adds more padding. */
+        .btn_starters {
+            margin-left:25px;
+        }
+
+        /* Used with the basic operations (+ - / * =) buttons; different color. */
+        .btn_basic_ops {
+            color:white;
+            background:grey;
+            border:grey;
+        }
+
+        /* Used with black function buttons. */
+        .btn_blacks {
+            font-size:14px;
+            color:white;
+            background:black;
+            border:grey;
+        }
+
+        /* Used with thin plotting buttons. */
+        .btn_thins {
+            height:30px;
+            font-size:14px;
+            color:white;
+            background:grey;
+            border:grey;
+        }
+
+        /* The calculator frame */
+        #bg {
+            background:#000077;
+            width:350px;
+            height:820px;
+            margin:50px;
+        }
+
+        /* Buffer room between top of screen and LCD */
+        #spacer {
+            height:15px;
+        }
+
+        /* 
+            The LCD (canvas) of the calculator. Dimensions are in terms of element size
+            on the page. Pixel dimensions are in the HTML document. (96x64)
+        */
+        #LCD {
+            margin-left:15px;
+            border:1px solid white;
+            width:320px;
+            height:240px;
+        }
+
+        /* Special buttons */
+        /* Alpha toggle button */
+        #btn_alpha {
+            background:green;
+        }
+
+        /* 2nd mode toggle button */
+        #btn_2nd {
+            background:lightblue;
+        }
+
+        /* D-pad Down */
+        #btn_dPad_Down {
+            margin-left:35px;
+            background:grey;
+        }
+
+        /* D-pad Right */
+        #btn_dPad_Right {
+            background:grey;
+        }
+
+        /* D-pad Left */
+        #btn_dPad_Left {
+            background:grey;
+        }
+
+        /* D-pad Up */
+        #btn_dPad_Up {
+            margin-left:230px;
+            background:grey;
+        }
+    </style>
+    
+    <script>
+        /******************************************************************************************
+        ** calculator.js
+        **
+        ** == Summary ==
+        ** Processes all calculator input; main file.
+        **
+        ********************************************************************************************/
+
+        // Power toggle
+        var powerState = false
+
+        // Elements
+        var screen = null;
+        var pixel = null;
+        var drawBuffer = null;
+        var backBuffer = [];
+        var backBufferIndex = 0;
+
+        var infixQueue = new Array ();
+
+        var head = null;
+        var cNode = null;
+
+        // After DOM loads, initialize variables
+        window.onload = function () {
+            initialize ();
+        }
+
+        class token {
+            constructor (c, o, f=null) {
+                this.character = c;
+                this.order = o;
+                this.func = f;
+            }
+        }
+
+        class Node {
+            constructor (value, next) {
+                this.value = value;
+                this.next = next;
+            }
+        }
+
+        /***************************
+        ** Token tiers
+        **
+        ** 0: Static number
+        ** 1: Ops + -
+        ** 2: Ops / *
+        ** 3: Ops ^ ^-1 ^2 sqrt(
+        ** 4: brackets ( )
+        ** 5:
+        ** 6: funcs sin( log( etc
+        *****************************/
+
+        /*******************************************************************************************
+        ** Initialize system variables.
+        **
+        ** Function sets up variables for use in the main script file, calculator.js (this one)
+        ** 1. Find page elements
+        ** 2. Set up draw buffers / matrices
+        ** 3. Load character dictionary from letters.js
+        ** 4. Prepare canvas for default state
+        ********************************************************************************************/
+        function initialize () {
+            screen = document.getElementById ("LCD").getContext ("2d");
+            
+            // Create screen buffer
+            drawBuffer = screen.createImageData (96, 64);
+            
+            // Blank the backBuffer
+            for (var j = 0; j < 64; j++) {
+                backBuffer [j] = new Array (96);
+            }
+            
+            head = new Node (null, null, null);
+            cNode = head;
+            
+            // Create the pixel object
+            pixel = screen.createImageData (1,1);
+            // Set the color of the object
+            pixel.data[0] = 255; // Red
+            pixel.data[1] = 255; // Green
+            pixel.data[2] = 255; // Blue
+            pixel.data[3] = 255; // Alpha
+
+            initializeLetters (); //letters.js -> initializeLetters ()
+            
+            // Toggle power to off (start in the off state) upon page load
+            screen.fillStyle = "black";
+            screen.fillRect (0, 0, 96, 64);	
+        }
+
+        /********************************************************************************************
+        **
+        ** Fired upon pressing "=" key; calls below processing functions to calculate answer.
+        **
+        ********************************************************************************************/
+        function equ () {
+            // Organize the tokens into something we can process
+            var outStack = organizeOutput ();
+            // Calculate the answer
+            var answer = calcOutput (outStack);
+            // Print out the answer
+            appendBackBuffer_Answer (answer.character);
+            
+            slamBuffer ();
+        }
+
+        /********************************************************************************************
+        **
+        ** Solves the processed input, reading the outStack from bottom to top.
+        **
+        ********************************************************************************************/
+        function calcOutput (stack) {
+            var answer = new Array ();
+
+            // Iterate through array until we find an op
+            while (stack.length > 0) {
+                // Pop a token from the front of the stack
+                poppedToken = stack.shift ();
+                
+                // If token is a number, place it on the answer stack. Keep doing
+                // this until we find an op token
+                if (poppedToken.order == 0) {
+                    answer.push (poppedToken);
+                } else {
+                    // Token is an op. Use number tokens in the answer stack to calculate
+                    // the answer. After, place answer onto answer stack as number token.
+                    
+                    // Token is a function token (top priority)
+                    if (poppedToken.order == 6) {
+                        a = answer.pop ();
+                        
+                        answer.push (new token (poppedToken.func (a), 0));
+                    // Token is some other op; take 2 numbers
+                    } else if (poppedToken.order < 6) {
+                        a = answer.pop ();
+                        b = answer.pop ();
+                        
+                        answer.push (new token (poppedToken.func (a, b), 0));
+                    } 
+                }
+            }
+            
+            return (answer.pop ());
+        }
+
+        /********************************************************************************************
+        **
+        ** Organize the content of the infixQueue into two stacks, "opStack" for operators and 
+        ** "outStack" for numbers. Once all tokens from infixQueue are exhausted, move all operators
+        ** from opStack onto the output stack, outStack. Uses Shunting-yard algorithm.
+        **
+        ********************************************************************************************/
+        function organizeOutput () {
+            // Pop from queue; sort order = 0 (numbers) into output array and order > 0 (ops)
+            // into op stack
+            var opStack = new Array ();
+            var outStack = new Array ();
+
+            // Continue popping from start of queue until we have every token
+            while (infixQueue.length > 0) {
+                // Check to see if token is number or op
+                var poppedToken = infixQueue.shift ();
+                
+                if (poppedToken.order == 0) {
+                    outStack.push (poppedToken);
+                } else {
+                    // Popped token is an op; check to see if the order of stacked ops agrees.
+                    var opPoppedToken = opStack.pop ();
+                    
+                    // Check if opStack is not empty
+                    if (opPoppedToken != null) {
+                        // Not empty; check orders. If order of existing token is higher,
+                        // dump contents onto outStack
+                        if (opPoppedToken.order > poppedToken.order) {
+                            // Order incorrect; dump stack
+                            // Put the recently popped op token onto outStack
+                            outStack.push (opPoppedToken);
+                            // Put the rest of the op tokens onto outStack
+                            while (opStack.length > 0) {
+                                outStack.push (opStack.pop ());
+                            }
+                            // Place the new op token on opStack
+                            opStack.push (poppedToken);
+                        } else {
+                            // Order is fine, so add both back
+                            opStack.push (opPoppedToken);
+                            opStack.push (poppedToken);
+                        }
+                    } else {
+                        // It was empty, so just put it in
+                        opStack.push (poppedToken);
+                    }
+                }
+            }
+
+            // Pop any remaining ops in the op stack
+            while (opStack.length > 0) {
+                outStack.push (opStack.pop ());
+            }
+
+            return (outStack);
+        }
+
+        /********************************************************************************************
+        **
+        ** Adds a command token (token object) corresponding to the pressed button to the token
+        ** queue "infixQueue". 
+        **
+        ** Token object consists of:
+        ** 1. String of characters E.G. "sin(" or "1".
+        ** 2. Function that should fire upon the button's operation.
+        **
+        ** If the token has characters included, they are drawn to the screen. 
+        ** 
+        ** If the last token before the most recent token contained a numeric character, such as
+        ** "1", consecutive numbers (E.G. 1, 2, 3, 4) will be collapsed into one token with one
+        ** number (E.G. 1234).
+        **
+        ********************************************************************************************/
+        function addCommand (t) {
+            // Check to make sure there is something to draw
+            if (t.character != null) {
+                // Append to buffer & draw
+                appendBackBuffer (t.character);     
+                slamBuffer ();
+            }
+            
+            // Check to see if we can't collapse the current token into the prior one; if 
+            // both consecutive tokens are of order 0 (a number), they should be one token.
+            var poppedToken = infixQueue.pop ();
+            
+            // If there is a token here
+            if (poppedToken != null) {
+                // If both tokens are numbers
+                if (poppedToken.order == 0 && t.order == 0) {
+                    // Collapse this new token into the one before it (they are both numbers)
+                    t.character = poppedToken.character + t.character;
+                } else {
+                    // Popped token is an op, so add it back
+                    infixQueue.push (poppedToken);
+                }
+            }
+            
+            // Add to infix command stack
+            infixQueue.push (t);
+        }
+
+        /********************************************************************************************
+        **
+        ** Misc button functions
+        **
+        ********************************************************************************************/
+
+        // Clears canvas, clears canvas buffer, maintains answer (if one exists)
+        function clr () {
+            backBufferIndex = 0;
+            
+            for (var j = 0; j < 64; j++) {
+                backBuffer [j] = new Array (96);
+            }
+            
+            slamBuffer ()
+        }
+
+        // Turn the unit on and off
+        function togglePower () {
+            // If the unit is off...
+            if (powerState == false) {
+                // Turn it on
+                screen.fillStyle = "green";
+            // If the unit is on...
+            } else {
+                // Turn if off
+                screen.fillStyle = "black";
+            }
+            screen.fillRect (0, 0, 96, 64);
+            // Flip the power flag
+            powerState = !powerState;
+        }
+        
+        /******************************************************************************************
+        ** drawing.js
+        **
+        ** == Summary ==
+        ** Controls canvas drawing procedures and pixel management.
+        **
+        ** System is called in order of:
+        ** 1. appendBackBuffer () or appendBackBuffer_Answer (), for placing lettering information into
+        **      the backBuffer matrix
+        ** 2. rollover (), called during appendBackBuffer () if there is no more screen space
+        ** 3. slamBuffer (), for copying the backBuffer matrix data into imageData and refreshing
+        **      the canvas for drawing 
+        ********************************************************************************************/
+
+        // Static variables
+        var LCD_PIXEL_WIDTH = 96;       // Number of pixels on canvas horizontally
+        var LCD_PIXEL_HEIGHT = 64;      // Number of pixels on canvas vertically
+        var LETTER_PIXEL_WIDTH = 6;     // Number of pixels one letter is made of, horizontally
+        var LETTER_PIXEL_HEIGHT = 8;    // Number of pixels one letter is made of, vertically
+
+        // Maximum # of letters that can fit on one line of the LCD
+        var MAX_LETTERS_ACROSS = Math.floor (LCD_PIXEL_WIDTH / LETTER_PIXEL_WIDTH);
+        // Maximum # of letters that can fit on one column of the LCD
+        var MAX_LETTERS_DOWN = Math.floor (LCD_PIXEL_HEIGHT / LETTER_PIXEL_HEIGHT);
+
+        /******************************************************************************************
+        ** Pixel Drawing
+        **
+        ** Append the backBuffer matrix with letters in string s. Letter pixel matrices are
+        ** queried from letters.js (letterDict) by character. Each letter is then appending at the
+        ** ending of the previous letter. If there is no more room after the last letter, the
+        ** cursor will move to a new line (LETTER_PIXEL_HEIGHT rows down).
+        ********************************************************************************************/
+        function appendBackBuffer (s) {
+            for (var k = 0; k < s.length; k++) {
+                var c = s[k];
+                
+                // backBufferIndex indicates how many letters currently reside on screen, used to
+                // find the next draw position. Index is a value 0 to (16 * 8).
+
+                // Calculate row on which to draw (0 to 7)
+                var rows = Math.floor ((LETTER_PIXEL_WIDTH * backBufferIndex) / LCD_PIXEL_WIDTH);
+                
+                // Check for rollover
+                if (rows >= MAX_LETTERS_DOWN) {
+                    rollover ();
+                    // Calculate row again
+                    rows = Math.floor ((LETTER_PIXEL_WIDTH * backBufferIndex) / LCD_PIXEL_WIDTH);
+                }
+                
+                // Make sure the current index is between 0 and 15 (since we already have the row)
+                var workingBufferIndex = backBufferIndex - (16 * Math.floor (backBufferIndex / 16));
+
+                // Calculate top left pixel coordinates for letter draw
+                var y = rows * LETTER_PIXEL_HEIGHT;
+                var x = workingBufferIndex * LETTER_PIXEL_WIDTH;
+                // Letter data draw coordinates
+                var y_l = 0;
+                var x_l = 0;
+
+                // Extract matrix data from dictionary
+                letter = letterDict[c];
+
+                // Iterate through the rows of the letter
+                for (var j = y; j < (y + LETTER_PIXEL_HEIGHT); j++) {
+                    // Iterate through the single layer of the letter
+                    for (var i = x; i < (x + LETTER_PIXEL_WIDTH); i++) {
+                        backBuffer[j][i] = letter [y_l][x_l]
+                        x_l++;
+                    }
+                    y_l++;
+                    x_l = 0;
+                }
+
+                // Add 1 to index to indicate addition of letter
+                backBufferIndex++;
+            }
+        }
+
+        /******************************************************************************************
+        ** LCD Row Rollover
+        **
+        ** Removes the top row of letter information from the backBuffer matrix
+        ** (of LETTER_PIXEL_HEIGHT pixel rows) and appends a blank letter row at the bottom of the
+        ** matrix. Afterwords, moves the write cursor (backBufferIndex) back MAX_LETTERS_ACROSS
+        ** letters to draw at the left edge of the LCD.
+        ********************************************************************************************/
+        function rollover () {
+            // Pop the top letter row off
+            // Append a new letter row on the bottom
+            for (var i = 0; i < LETTER_PIXEL_HEIGHT; i++) {
+                backBuffer.shift ();
+                backBuffer.push (new Array (LETTER_PIXEL_WIDTH * LCD_PIXEL_WIDTH));
+            }
+            
+            // Draw the update
+            slamBuffer ();
+            // Reposition draw index
+            backBufferIndex -= MAX_LETTERS_ACROSS;
+        }
+
+        // Special version of the appender that appends a formatted answer
+        function appendBackBuffer_Answer (s) {
+            // Calculate row on which to draw
+            var rows = Math.floor ((LETTER_PIXEL_WIDTH * backBufferIndex) / LCD_PIXEL_WIDTH);
+            
+            // Make sure the current index is between 0 and 15 (since we already have the row)
+            var workingBufferIndex = backBufferIndex - (16 * Math.floor (backBufferIndex / 16));
+
+            // Calculate top left pixel coordinates for letter draw
+            var y = rows * LETTER_PIXEL_HEIGHT;
+            var x = workingBufferIndex * LETTER_PIXEL_WIDTH;
+            // Letter data draw coordinates
+            var y_l = 0;
+            var x_l = 0;
+            
+            var space = letterDict [" "];
+            
+            // blank the rest of the existing row with spaces
+            while (workingBufferIndex < 16) {
+                // Iterate through the rows of the letter
+                for (var j = y; j < (y + LETTER_PIXEL_HEIGHT); j++) {
+                    // Iterate through the single layer of the letter
+                    for (var i = x; i < (x + LETTER_PIXEL_WIDTH); i++) {
+                        backBuffer[j][i] = space [y_l][x_l]
+                        x_l++;
+                    }
+                    y_l++;
+                    x_l = 0;
+                }
+                // Blank letter draw coords
+                y_l = 0;
+                x_l = 0;
+                // Increment the draw index
+                workingBufferIndex++;
+                // calibrate the x axis draw position
+                x = workingBufferIndex * LETTER_PIXEL_WIDTH;
+                // calibrate data position
+                backBufferIndex++;
+            }
+            
+            // We should be on a new line unless something very bad happened.
+            // recalibrate coords
+            rows = Math.floor ((LETTER_PIXEL_WIDTH * backBufferIndex) / LCD_PIXEL_WIDTH);
+            
+            // Check for rollover
+            if (rows >= MAX_LETTERS_DOWN) {
+                rollover ();
+                // Calculate row again
+                rows = Math.floor ((LETTER_PIXEL_WIDTH * backBufferIndex) / LCD_PIXEL_WIDTH);
+            }
+            
+            workingBufferIndex = backBufferIndex - (16 * Math.floor (backBufferIndex / 16));
+            y = rows * LETTER_PIXEL_HEIGHT;
+            x = workingBufferIndex * LETTER_PIXEL_WIDTH;
+            
+            // Draw spaces until we reach enough space to draw answer
+            while (workingBufferIndex < (16 - s.length)) {
+                // Iterate through the rows of the letter
+                for (var j = y; j < (y + LETTER_PIXEL_HEIGHT); j++) {
+                    // Iterate through the single layer of the letter
+                    for (var i = x; i < (x + LETTER_PIXEL_WIDTH); i++) {
+                        backBuffer[j][i] = space [y_l][x_l]
+                        x_l++;
+                    }
+                    y_l++;
+                    x_l = 0;
+                }
+                // Blank letter draw coords
+                y_l = 0;
+                x_l = 0;
+                // Increment the draw index
+                workingBufferIndex++;
+                // calibrate the x axis draw position
+                x = workingBufferIndex * LETTER_PIXEL_WIDTH;
+                // calibrate data position
+                backBufferIndex++;
+            }
+            
+            // draw answer
+            for (var i = 0; i < s.length; i++) {
+                appendBackBuffer (s [i]);
+            }
+        }
+
+        // Writes the backBuffer matrix into the imageData format
+        function slamBuffer () {
+            var global_i = 0;
+
+            // Copy data from back buffer matrix to draw buffer array
+
+            // Iterate from the rows of the back buffer
+            for (var i = 0; i < LCD_PIXEL_HEIGHT; i++) {
+                // Iterate through a single layer of the back buffer
+                for (var j = 0; j < LCD_PIXEL_WIDTH; j++) {
+                    // If value is 1, draw pure white pixel
+                    if (backBuffer [i][j] == 1) {
+                        drawBuffer.data[global_i + 0] = 255; // R
+                        drawBuffer.data[global_i + 1] = 255; // G
+                        drawBuffer.data[global_i + 2] = 255; // B
+                        drawBuffer.data[global_i + 3] = 255; // A
+                    // If value is 0, draw pure black pixel
+                    } else { //Draw black
+                        drawBuffer.data[global_i + 0] = 0;   // R
+                        drawBuffer.data[global_i + 1] = 0;   // G
+                        drawBuffer.data[global_i + 2] = 0;   // B
+                        drawBuffer.data[global_i + 3] = 255; // A
+                    }
+                    
+                    // Add 4 to index as each pixel is comprised of 4 parts (RGBA)
+                    global_i += 4;
+                }
+            }
+
+            // Place data onto the canvas
+            screen.putImageData (drawBuffer, 0, 0);
+        }
+
+        /******************************************************************************************
+        ** Test Drawing
+        **
+        ** System writes alternating black and white vertical bars to the canvas using the
+        ** predetermined pixel bounds (LCD_PIXEL_WIDTH x LCD_PIXEL_HEIGHT)
+        ********************************************************************************************/
+        function testWrite () {
+            var flippyflop = true;
+
+            for (var i = 0; i < (LCD_PIXEL_WIDTH * LCD_PIXEL_HEIGHT * 4); i += 4) {
+                if (flippyflop == true) {
+                    drawBuffer.data[i + 0] = 255; // R
+                    drawBuffer.data[i + 1] = 255; // G
+                    drawBuffer.data[i + 2] = 255; // B
+                    drawBuffer.data[i + 3] = 255; // A
+                    
+                    flippyflop = !flippyflop;
+                } else {
+                    drawBuffer.data[i + 0] = 0; // R
+                    drawBuffer.data[i + 1] = 0; // G
+                    drawBuffer.data[i + 2] = 0; // B
+                    drawBuffer.data[i + 3] = 255; // A
+                    
+                    flippyflop = !flippyflop;
+                }
+            }
+
+            screen.putImageData (drawBuffer, 0, 0);
+        }
+
+        /******************************************************************************************
+        ** Pixel Drawing
+        **
+        ** Image data is structured as one large array of all the data the comprises the image.
+        ** Each pixel of the image is separated into its RPGA components. For a 1x1 image, the
+        ** data would look like an array of 4 values:
+        ** i = 0 being red,
+        ** i = 1 being green,
+        ** i = 2 being blue,
+        ** i = 3 being alpha. 
+        ** For any image NxM, the total number of elements in the array is N*M*4. This data goes
+        ** from left to right; upon hitting the max width of the canvas, the further elements
+        ** correspond to the row of pixels below the prior.
+        ********************************************************************************************/
+        function drawPixel (x, y) {
+            screen.putImageData (pixel, x, y);
+        }
+
+        /******************************************************************************************
+        ** functions.js
+        **
+        ** == Summary ==
+        ** Contains functions for specific mathematical operations handled.
+        **
+        ********************************************************************************************/
+
+        // Truncates trailing numbers behind a decimal to a maximum of 10 numbers
+        function truncate (a) {
+            // Check if number is float
+            if (a % 1 != 0) {
+                // Remove this cheap fix !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                return (Number (a.toFixed (10)).toString ());
+            }
+            
+            return (a.toString ());
+        }
+
+        function add (a, b) {
+            a = Number (a.character);
+            b = Number (b.character);
+            
+            return (truncate (a + b));
+        }
+
+        function subtract (a, b) {
+            a = Number (a.character);
+            b = Number (b.character);
+            
+            return (truncate (b - a));
+        }
+
+        function divide (a, b) {
+            a = Number (a.character);
+            b = Number (b.character);
+            
+            return (truncate (b / a));
+        }
+
+        function multiply (a, b) {
+            a = Number (a.character);
+            b = Number (b.character);
+            
+            return (truncate (a * b));
+        }
+
+        function log (a) {
+            a = Number (a.character);
+
+            return (truncate (Math.log (a)));
+        }
+
+        function naturalLog (a) {
+            a = Number (a.character);
+            
+            return (truncate (Math.naturalLog (a)));
+        }
+
+        function sine (a) {
+            a = Number (a.character);
+            
+            return (truncate (Math.sin (a)));
+        }
+
+        function cosine (a) {
+            a = Number (a.character);
+            
+            return (truncate (Math.cos (a)));
+        }
+
+        function tangent (a) {
+            a = Number (a.character);
+            
+            return (truncate (Math.tan (a)));
+        }
+
+        /******************************************************************************************
+        ** letters.js
+        **
+        ** == Summary ==
+        ** Contains matrices describing all characters usable within the calculator as matrices of
+        ** 1s and 0s of dimension 6x8. Externally used via letterDict dictionary.
+        **
+        ********************************************************************************************/
+
+        var letterDict = null;
+
+        // Loads every usable character into memory as a 8x6 matrix
+        function initializeLetters () {
+            letterDict = JSON.parse  ('{"A":[[0, 1, 1, 1, 0, 0], \
+                                             [1, 0, 0, 0, 1, 0], \
+                                             [1, 0, 0, 0, 1, 0], \
+                                             [1, 1, 1, 1, 1, 0], \
+                                             [1, 0, 0, 0, 1, 0], \
+                                             [1, 0, 0, 0, 1, 0], \
+                                             [1, 0, 0, 0, 1, 0], \
+                                             [0, 0, 0, 0, 0, 0]], \
+                                        "B":[[1, 1, 1, 1, 0, 0], \
+                                             [1, 0, 0, 0, 1, 0], \
+                                             [1, 0, 0, 0, 1, 0], \
+                                             [1, 1, 1, 1, 0, 0], \
+                                             [1, 0, 0, 0, 1, 0], \
+                                             [1, 0, 0, 0, 1, 0], \
+                                             [1, 1, 1, 1, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0]], \
+                                        "0":[[0, 1, 1, 1, 0, 0], \
+                                             [1, 0, 0, 0, 1, 0], \
+                                             [1, 0, 0, 1, 1, 0], \
+                                             [1, 0, 1, 0, 1, 0], \
+                                             [1, 1, 0, 0, 1, 0], \
+                                             [1, 0, 0, 0, 1, 0], \
+                                             [0, 1, 1, 1, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0]], \
+                                        "1":[[0, 0, 1, 0, 0, 0], \
+                                             [0, 1, 1, 0, 0, 0], \
+                                             [0, 0, 1, 0, 0, 0], \
+                                             [0, 0, 1, 0, 0, 0], \
+                                             [0, 0, 1, 0, 0, 0], \
+                                             [0, 0, 1, 0, 0, 0], \
+                                             [0, 1, 1, 1, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0]], \
+                                        "2":[[0, 1, 1, 1, 0, 0], \
+                                             [1, 0, 0, 0, 1, 0], \
+                                             [0, 0, 0, 0, 1, 0], \
+                                             [0, 0, 0, 1, 0, 0], \
+                                             [0, 0, 1, 0, 0, 0], \
+                                             [0, 1, 0, 0, 0, 0], \
+                                             [1, 1, 1, 1, 1, 0], \
+                                             [0, 0, 0, 0, 0, 0]], \
+                                        "3":[[1, 1, 1, 1, 1, 0], \
+                                             [0, 0, 0, 1, 0, 0], \
+                                             [0, 0, 1, 0, 0, 0], \
+                                             [0, 0, 0, 1, 0, 0], \
+                                             [0, 0, 0, 0, 1, 0], \
+                                             [1, 0, 0, 0, 1, 0], \
+                                             [0, 1, 1, 1, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0]], \
+                                        "4":[[0, 0, 0, 1, 0, 0], \
+                                             [0, 0, 1, 1, 0, 0], \
+                                             [0, 1, 0, 1, 0, 0], \
+                                             [1, 0, 0, 1, 0, 0], \
+                                             [1, 1, 1, 1, 1, 0], \
+                                             [0, 0, 0, 1, 0, 0], \
+                                             [0, 0, 0, 1, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0]], \
+                                        "5":[[1, 1, 1, 1, 1, 0], \
+                                             [1, 0, 0, 0, 0, 0], \
+                                             [1, 1, 1, 1, 0, 0], \
+                                             [0, 0, 0, 0, 1, 0], \
+                                             [0, 0, 0, 0, 1, 0], \
+                                             [1, 0, 0, 0, 1, 0], \
+                                             [0, 1, 1, 1, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0]], \
+                                        "6":[[0, 0, 1, 1, 0, 0], \
+                                             [0, 1, 0, 0, 0, 0], \
+                                             [1, 0, 0, 0, 0, 0], \
+                                             [1, 1, 1, 1, 0, 0], \
+                                             [1, 0, 0, 0, 1, 0], \
+                                             [1, 0, 0, 0, 1, 0], \
+                                             [0, 1, 1, 1, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0]], \
+                                        "7":[[1, 1, 1, 1, 1, 0], \
+                                             [0, 0, 0, 0, 1, 0], \
+                                             [0, 0, 0, 1, 0, 0], \
+                                             [0, 0, 1, 0, 0, 0], \
+                                             [0, 1, 0, 0, 0, 0], \
+                                             [0, 1, 0, 0, 0, 0], \
+                                             [0, 1, 0, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0]], \
+                                        "8":[[0, 1, 1, 1, 0, 0], \
+                                             [1, 0, 0, 0, 1, 0], \
+                                             [1, 0, 0, 0, 1, 0], \
+                                             [0, 1, 1, 1, 0, 0], \
+                                             [1, 0, 0, 0, 1, 0], \
+                                             [1, 0, 0, 0, 1, 0], \
+                                             [0, 1, 1, 1, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0]], \
+                                        "9":[[0, 1, 1, 1, 0, 0], \
+                                             [1, 0, 0, 0, 1, 0], \
+                                             [1, 0, 0, 0, 1, 0], \
+                                             [0, 1, 1, 1, 1, 0], \
+                                             [0, 0, 0, 0, 1, 0], \
+                                             [0, 0, 0, 1, 0, 0], \
+                                             [0, 1, 1, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0]], \
+                                        "+":[[0, 0, 0, 0, 0, 0], \
+                                             [0, 0, 1, 0, 0, 0], \
+                                             [0, 0, 1, 0, 0, 0], \
+                                             [1, 1, 1, 1, 1, 0], \
+                                             [0, 0, 1, 0, 0, 0], \
+                                             [0, 0, 1, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0]], \
+                                        "-":[[0, 0, 0, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0], \
+                                             [1, 1, 1, 1, 1, 0], \
+                                             [0, 0, 0, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0]], \
+                                        "*":[[0, 0, 0, 0, 0, 0], \
+                                             [0, 0, 1, 0, 0, 0], \
+                                             [1, 0, 1, 0, 1, 0], \
+                                             [0, 1, 1, 1, 0, 0], \
+                                             [1, 0, 1, 0, 1, 0], \
+                                             [0, 0, 1, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0]], \
+                                        "/":[[0, 0, 0, 0, 0, 0], \
+                                             [0, 0, 1, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0], \
+                                             [1, 1, 1, 1, 1, 0], \
+                                             [0, 0, 0, 0, 0, 0], \
+                                             [0, 0, 1, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0]], \
+                                        ".":[[0, 0, 0, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0], \
+                                             [0, 1, 1, 0, 0, 0], \
+                                             [0, 1, 1, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0]], \
+                                        "(":[[0, 0, 0, 1, 0, 0], \
+                                             [0, 0, 1, 0, 0, 0], \
+                                             [0, 1, 0, 0, 0, 0], \
+                                             [0, 1, 0, 0, 0, 0], \
+                                             [0, 1, 0, 0, 0, 0], \
+                                             [0, 0, 1, 0, 0, 0], \
+                                             [0, 0, 0, 1, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0]], \
+                                        ")":[[0, 1, 0, 0, 0, 0], \
+                                             [0, 0, 1, 0, 0, 0], \
+                                             [0, 0, 0, 1, 0, 0], \
+                                             [0, 0, 0, 1, 0, 0], \
+                                             [0, 0, 0, 1, 0, 0], \
+                                             [0, 0, 1, 0, 0, 0], \
+                                             [0, 1, 0, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0]], \
+                                        "a":[[0, 0, 0, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0], \
+                                             [0, 1, 1, 1, 0, 0], \
+                                             [0, 0, 0, 0, 1, 0], \
+                                             [0, 1, 1, 1, 1, 0], \
+                                             [1, 0, 0, 0, 1, 0], \
+                                             [0, 1, 1, 1, 1, 0], \
+                                             [0, 0, 0, 0, 0, 0]], \
+                                        "c":[[0, 0, 0, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0], \
+                                             [0, 1, 1, 1, 1, 0], \
+                                             [1, 0, 0, 0, 0, 0], \
+                                             [1, 0, 0, 0, 0, 0], \
+                                             [1, 0, 0, 0, 0, 0], \
+                                             [0, 1, 1, 1, 1, 0], \
+                                             [0, 0, 0, 0, 0, 0]], \
+                                        "i":[[0, 0, 0, 0, 0, 0], \
+                                             [0, 0, 1, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0], \
+                                             [0, 0, 1, 0, 0, 0], \
+                                             [0, 0, 1, 0, 0, 0], \
+                                             [0, 0, 1, 0, 0, 0], \
+                                             [0, 0, 1, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0]], \
+                                        "n":[[0, 0, 0, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0], \
+                                             [1, 0, 1, 1, 0, 0], \
+                                             [1, 1, 0, 0, 1, 0], \
+                                             [1, 0, 0, 0, 1, 0], \
+                                             [1, 0, 0, 0, 1, 0], \
+                                             [1, 0, 0, 0, 1, 0], \
+                                             [0, 0, 0, 0, 0, 0]], \
+                                        "o":[[0, 0, 0, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0], \
+                                             [0, 1, 1, 1, 0, 0], \
+                                             [1, 0, 0, 0, 1, 0], \
+                                             [1, 0, 0, 0, 1, 0], \
+                                             [1, 0, 0, 0, 1, 0], \
+                                             [0, 1, 1, 1, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0]], \
+                                        "s":[[0, 0, 0, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0], \
+                                             [0, 1, 1, 1, 1, 0], \
+                                             [1, 0, 0, 0, 0, 0], \
+                                             [0, 1, 1, 1, 0, 0], \
+                                             [0, 0, 0, 0, 1, 0], \
+                                             [1, 1, 1, 1, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0]], \
+                                        "t":[[0, 0, 1, 0, 0, 0], \
+                                             [0, 0, 1, 0, 0, 0], \
+                                             [1, 1, 1, 1, 1, 0], \
+                                             [0, 0, 1, 0, 0, 0], \
+                                             [0, 0, 1, 0, 0, 0], \
+                                             [0, 0, 1, 0, 1, 0], \
+                                             [0, 0, 0, 1, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0]], \
+                                        " ":[[0, 0, 0, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0], \
+                                             [0, 0, 0, 0, 0, 0]]}');
+        }
+    </script>
+</head>
+
+<body>
+    <!-- Calculator Frame -->
+    <div id="bg">
+        <!-- Spacer -->
+        <div id="spacer"></div>
+
+        <!-- LCD -->
+        <canvas id="LCD" height="64" width="96">
+
+        </canvas>
+
+        <!-- Button Panel -->
+        <div id="btn_panel">
+        
+            <!-- Row #1 (weird thin buttons) -->
+            <div id="r1">	
+                <!-- Equation input button -->
+                <button onclick="?" class="btn_base btn_starters btn_thins">
+                    Y=
+                </button>
+
+                <!-- Plotter options button -->
+                <button onclick="?" class="btn_base btn_thins">
+                    WIN
+                </button>
+
+                <!-- Plotter zoom button -->
+                <button onclick="testWrite ()" class="btn_base btn_thins">
+                    ZOOM
+                </button>
+
+                <!-- Plotter equation trace button -->
+                <button onclick="?" class="btn_base btn_thins">
+                    TRACE
+                </button>
+
+                <!-- Plotter plot button -->
+                <button onclick="?" class="btn_base btn_thins">
+                    PLOT
+                </button>
+            </div>
+
+            <!-- Directional up button. Technically row two, but don't tell anyone. -->
+            <div>
+                <button onclick="?" id="btn_dPad_Up" class="btn_base btn_blacks">
+                    ^
+                </button>
+            </div>
+
+            <!-- Row #2 -->
+            <div id="r2">
+                <!-- Alternate mode toggle button -->
+                <button onclick="toggleMode (1)" id="btn_2nd" class="btn_base btn_starters btn_blacks">
+                    2nd
+                </button>
+
+                <!-- Configurations button -->
+                <button onclick="btnToText ('X')" class="btn_base btn_blacks">
+                    MODE
+                </button>
+
+                <!-- Delete button -->
+                <button onclick="equDelete ()" class="btn_base btn_blacks">
+                    DEL
+                </button>
+
+                <!-- Directional left button -->
+                <button onclick="cursor (-1, 0)" id="btn_dPad_Left" class="btn_base btn_blacks">
+                    <
+                </button>
+
+                <!-- Directional right button -->
+                <button onclick="cursor (1, 0)" id="btn_dPad_Right" class="btn_base btn_blacks">
+                    >
+                </button>
+            </div>
+
+            <!-- Row #3 -->
+            <div id="r3">
+                <!-- Alpha toggle button -->
+                <button onclick="toggleMode (2)" id="btn_alpha" class="btn_base btn_starters btn_blacks">
+                    ALPHA
+                </button>
+
+                <!-- Variable input button -->
+                <button onclick="btnToText ('X')" class="btn_base btn_blacks">
+                    X,T,?,n
+                </button>
+
+                <!-- Statistics functions button -->
+                <button onclick="listStatFuncs ()" class="btn_base btn_blacks">
+                    STAT
+                </button>
+
+                <!-- Directional down button -->
+                <button onclick="cursor (0, -1)" id="btn_dPad_Down" class="btn_base btn_blacks">
+                    V
+                </button>
+            </div>
+
+            <!-- Row #4 -->
+            <div id="r4">
+                <!-- List of extra functions button -->
+                <button onclick="listExtraFuncs ()" class="btn_base btn_starters btn_blacks">
+                    MATH
+                </button>
+
+                <!-- List calculator applications -->
+                <button onclick="listApps ()" class="btn_base btn_blacks">
+                    APPS
+                </button>
+
+                <!-- User-made apps / app developer button -->
+                <button onclick="listUserApps ()" class="btn_base btn_blacks">
+                    PRGM
+                </button>
+
+                <!-- View memory variables button -->
+                <button onclick="listVars ()" class="btn_base btn_blacks">
+                    VARS
+                </button>
+
+                <!-- Clear screen button -->
+                <button onclick="clr ()" class="btn_base btn_blacks">
+                    CLR
+                </button>
+            </div>
+            
+            <!-- Row #5 -->
+            <div id="r5">
+                <!-- Inverse button -->
+                <button onclick="btnToText ('^(-1)')" class="btn_base btn_starters btn_blacks">
+                    x^-1
+                </button>
+
+                <!-- Sine button -->
+                <button onclick="addCommand (new token ('sin(', 6, sine))" class="btn_base btn_blacks">
+                    SIN
+                </button>
+
+                <!-- Cosine button -->
+                <button onclick="addCommand (new token ('cos(', 6, cosine))" class="btn_base btn_blacks">
+                    COS
+                </button>
+
+                <!-- Tangent button -->
+                <button onclick="addCommand (new token ('tan(', 6, tangent))" class="btn_base btn_blacks">
+                    TAN
+                </button>
+
+                <!-- Exponential button -->
+                <button onclick="btnToText ('^')" class="btn_base btn_blacks">
+                    ^
+                </button>
+            </div>
+
+            <!-- Row #6 -->
+            <div id="r6">
+                <!-- Num Squared button -->
+                <button onclick="?" class="btn_base btn_starters btn_blacks">
+                    x^2
+                </button>
+
+                <!-- Comma button -->
+                <button onclick="?" class="btn_base">
+                    ,
+                </button>
+
+                <!-- Left parenthesis button -->
+                <button onclick="addCommand ('(')" class="btn_base">
+                    (
+                </button>
+
+                <!-- Right parenthesis button -->
+                <button onclick="addCommand (')')" class="btn_base">
+                    )
+                </button>
+
+                <!-- Divide button -->
+                <button onclick="addCommand (new token ('/', 2, divide))" class="btn_base btn_basic_ops">
+                    /
+                </button>
+            </div>
+
+            <!-- Row #7 -->
+            <div id="r7">
+                <!-- Log -->
+                <button onclick="addCommand (new token ('log(', 6, log))" class="btn_base btn_starters btn_blacks">
+                    LOG
+                </button>
+
+                <!-- Numeric 7 button -->
+                <button onclick="addCommand (new token ('7', 0))" class="btn_base">
+                    7
+                </button>
+
+                <!-- Numeric 8 button -->
+                <button onclick="addCommand (new token ('8', 0))" class="btn_base">
+                    8
+                </button>
+
+                <!-- Numeric 9 button -->
+                <button onclick="addCommand (new token ('9', 0))" class="btn_base">
+                    9
+                </button>
+
+                <!-- Multiply button -->
+                <button onclick="addCommand (new token ('*', 2, multiply))" class="btn_base btn_basic_ops">
+                    *
+                </button>
+            </div>
+
+            <!-- Row #8 -->
+            <div id="r8">
+                <!-- Natural Log -->
+                <button onclick="addCommand (new token ('ln(', 6, naturalLog))" class="btn_base btn_starters btn_blacks">
+                    LN
+                </button>
+
+                <!-- Numeric 4 button -->
+                <button onclick="addCommand (new token ('4', 0))" class="btn_base">
+                    4
+                </button>
+
+                <!-- Numeric 5 button -->
+                <button onclick="addCommand (new token ('5', 0))" class="btn_base">
+                    5
+                </button>
+
+                <!-- Numeric 6 button -->
+                <button onclick="addCommand (new token ('6', 0))" class="btn_base">
+                    6
+                </button>
+
+                <!-- Subtract button -->
+                <button onclick="addCommand (new token ('-', 1, subtract))" class="btn_base btn_basic_ops">
+                    -
+                </button>
+            </div>
+
+            <!-- Row #9 -->
+            <div id="r9">
+                <!-- Store to memory -->
+                <button onclick="?" class="btn_base btn_starters btn_blacks">
+                    STO>
+                </button>
+
+                <!-- Numeric 1 button -->
+                <button onclick="addCommand (new token ('1', 0))" class="btn_base">
+                    1
+                </button>
+
+                <!-- Numeric 2 button -->
+                <button onclick="addCommand (new token ('2', 0))" class="btn_base">
+                    2
+                </button>
+
+                <!-- Numeric 3 button -->
+                <button onclick="addCommand (new token ('3', 0))" class="btn_base">
+                    3
+                </button>
+
+                <!-- Add button -->
+                <button onclick="addCommand (new token ('+', 1, add))" class="btn_base btn_basic_ops">
+                    +
+                </button>
+            </div>
+
+            <!-- Row #10 -->
+            <div id="r10">
+                <!-- On button; turn the calculator on or off -->
+                <button onclick="togglePower ()" class="btn_base btn_starters btn_blacks">
+                    ON
+                </button>
+
+                <!-- Numeric 0 button -->
+                <button onclick="addCommand (new token ('0', 0))" class="btn_base">
+                    0
+                </button>
+
+                <!-- Decimal button -->
+                <button onclick="?" class="btn_base">
+                    .
+                </button>
+
+                <!-- Negative togger button -->
+                <button onclick="?" class="btn_base">
+                    (-)
+                </button>
+
+                <!-- Enter button -->
+                <button onclick="equ ()" class="btn_base btn_basic_ops">
+                    =
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
 </html>
