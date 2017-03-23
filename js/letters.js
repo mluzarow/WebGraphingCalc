@@ -1,3 +1,12 @@
+/******************************************************************************************
+** letters.js
+**
+** == Summary ==
+** Contains matrices describing all characters usable within the calculator as matrices of
+** 1s and 0s of dimension 6x8. Externally used via letterDict dictionary.
+**
+********************************************************************************************/
+
 var letterDict = null;
 
 // Loads every usable character into memory as a 8x6 matrix

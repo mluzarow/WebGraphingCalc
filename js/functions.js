@@ -1,3 +1,10 @@
+/******************************************************************************************
+** functions.js
+**
+** == Summary ==
+** Contains functions for specific mathematical operations handled.
+**
+********************************************************************************************/
 
 // Truncates trailing numbers behind a decimal to a maximum of 10 numbers
 function truncate (a) {
