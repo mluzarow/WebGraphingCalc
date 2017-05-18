@@ -84,7 +84,8 @@ function initialize () {
 	pixel.data[2] = 255; // Blue
 	pixel.data[3] = 255; // Alpha
 
-	initializeLetters (); //letters.js -> initializeLetters ()
+	initializeLetters (); // letters.js -> initializeLetters ()
+    initializeButtonEvents (); // events.js -> initializeButtonEvents ()
     
     // Toggle power to off (start in the off state) upon page load
 	screen.fillStyle = "black";
