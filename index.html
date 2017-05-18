@@ -194,7 +194,7 @@
             <!-- Row #5 -->
             <div id="r5">
                 <!-- Inverse button -->
-                <button onclick="btnToText ('^(-1)')" class="btn_base btn_starters btn_blacks">
+                <button onclick="addCommand (new token ('^(-1)', 3, invert))" class="btn_base btn_starters btn_blacks">
                     x^-1
                 </button>
 
@@ -214,7 +214,7 @@
                 </button>
 
                 <!-- Exponential button -->
-                <button onclick="btnToText ('^')" class="btn_base btn_blacks">
+                <button onclick="addCommand (new token ('^', 3, exponent))" class="btn_base btn_blacks">
                     ^
                 </button>
             </div>
@@ -222,22 +222,22 @@
             <!-- Row #6 -->
             <div id="r6">
                 <!-- Num Squared button -->
-                <button onclick="?" class="btn_base btn_starters btn_blacks">
+                <button onclick="addCommand (new token ('^2', 3, square))" class="btn_base btn_starters btn_blacks">
                     x^2
                 </button>
 
                 <!-- Comma button -->
-                <button onclick="?" class="btn_base">
+                <button onclick="addCommand (new token (',', 0))" class="btn_base">
                     ,
                 </button>
 
                 <!-- Left parenthesis button -->
-                <button onclick="addCommand ('(')" class="btn_base">
+                <button onclick="addCommand (new token ('(', 4))" class="btn_base">
                     (
                 </button>
 
                 <!-- Right parenthesis button -->
-                <button onclick="addCommand (')')" class="btn_base">
+                <button onclick="addCommand (new token (')', 4))" class="btn_base">
                     )
                 </button>
 
@@ -344,7 +344,7 @@
                 </button>
 
                 <!-- Decimal button -->
-                <button onclick="?" class="btn_base">
+                <button onclick="addCommand (new token ('.', 0))" class="btn_base">
                     .
                 </button>
 

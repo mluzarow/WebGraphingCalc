@@ -74,3 +74,17 @@ function tangent (a) {
     
     return (truncate (Math.tan (a)));
 }
+
+function square (a) {
+    a = Number (a.character);
+    
+    return (truncate (Math.sqrt (a)));
+}
+
+function exponent2 (a) {
+    a = Number (a.character);
+    
+    return (truncate (Math.exp (a, 2)));
+}
+
+
