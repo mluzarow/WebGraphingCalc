@@ -18,9 +18,6 @@ var backBufferIndex = 0;
 
 var infixQueue = new Array ();
 
-var head = null;
-var cNode = null;
-
 // After DOM loads, initialize variables
 window.onload = function () {
 	initialize ();
@@ -31,13 +28,6 @@ class token {
         this.character = c;
         this.order = o;
         this.func = f;
-    }
-}
-
-class Node {
-    constructor (value, next) {
-        this.value = value;
-        this.next = next;
     }
 }
 
@@ -72,9 +62,6 @@ function initialize () {
 	for (var j = 0; j < 64; j++) {
 		backBuffer [j] = new Array (96);
 	}
-	
-    head = new Node (null, null, null);
-    cNode = head;
     
 	// Create the pixel object
 	pixel = screen.createImageData (1,1);
