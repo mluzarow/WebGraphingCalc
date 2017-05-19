@@ -266,13 +266,19 @@ function addCommand (t) {
 
 // Clears canvas, clears canvas buffer, maintains answer (if one exists)
 function clr () {
+    // Reset drawing index
     backBufferIndex = 0;
     
+    // Blank draw buffer
     for (var j = 0; j < 64; j++) {
 		backBuffer [j] = new Array (96);
 	}
     
-    slamBuffer ()
+    // Slam the blank buffer (blank the screen)
+    slamBuffer ();
+    
+    // Blank infixQueue
+    infixQueue = new Array ();
 }
 
 // Turn the unit on and off
