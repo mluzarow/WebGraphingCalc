@@ -102,7 +102,9 @@ function btn_clr_click () {
 **
 ******************************/
 function btn_exp_invert_click () {
-    addCommand (new token ('^(-1)', 3, invert));
+    addCommand (new token ('^', 3, exponent));
+    addCommand (new token ('~', 0));
+    addCommand (new token ('1', 0));
 }
 function btn_sin_click () {
     addCommand (new token ('sin(', 6, sine));
@@ -123,7 +125,8 @@ function btn_exp_click () {
 **
 ******************************/
 function btn_exp_2_click () {
-    addCommand (new token ('^2', 3, square));
+    addCommand (new token ('^', 3, exponent));
+    addCommand (new token ('2', 0));
 }
 function btn_comma_click () {
     addCommand (new token (',', 0));

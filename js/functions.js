@@ -81,18 +81,6 @@ function square (a) {
     return (truncate (Math.sqrt (a)));
 }
 
-function exponent2 (a) {
-    a = Number (a.character);
-    
-    return (truncate (Math.exp (a, 2)));
-}
-
-function exponentInvert (a) {
-    a = Number (a.character);
-    
-    return (truncate (Math.exp (a, -1)));
-}
-
 function exponent (a, b) {
     a = Number (a.character);
     b = Number (b.character);
