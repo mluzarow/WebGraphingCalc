@@ -1,65 +1,9 @@
 function initializeButtonEvents () {
-    // Row #1
-    document.getElementById ("btn_yEquals").addEventListener ("mousedown", btn_yEquals_click, false);
-    document.getElementById ("btn_win").addEventListener ("mousedown", btn_win_click, false);
-    document.getElementById ("btn_zoom").addEventListener ("mousedown", btn_zoom_click, false);
-    document.getElementById ("btn_trace").addEventListener ("mousedown", btn_trace_click, false);
-    document.getElementById ("btn_plot").addEventListener ("mousedown", btn_plot_click, false);
-    // Row #1.5
-    document.getElementById ("btn_dPad_Up").addEventListener ("mousedown", btn_dPad_Up_click, false);
-    // Row #2
-    document.getElementById ("btn_2nd").addEventListener ("mousedown", btn_2nd_click, false);
-    document.getElementById ("btn_mode").addEventListener ("mousedown", btn_mode_click, false);
-    document.getElementById ("btn_del").addEventListener ("mousedown", btn_del_click, false);
-    document.getElementById ("btn_dPad_Left").addEventListener ("mousedown", btn_dPad_Left_click, false);
-    document.getElementById ("btn_dPad_Right").addEventListener ("mousedown", btn_dPad_Right_click, false);
-    // Row #3
-    document.getElementById ("btn_alpha").addEventListener ("mousedown", btn_alpha_click, false);
-    document.getElementById ("btn_x").addEventListener ("mousedown", btn_x_click, false);
-    document.getElementById ("btn_stat").addEventListener ("mousedown", btn_stat_click, false);
-    document.getElementById ("btn_dPad_Down").addEventListener ("mousedown", btn_dPad_Down_click, false);
-    // Row #4
-    document.getElementById ("btn_math").addEventListener ("mousedown", btn_math_click, false);
-    document.getElementById ("btn_apps").addEventListener ("mousedown", btn_apps_click, false);
-    document.getElementById ("btn_prgm").addEventListener ("mousedown", btn_prgm_click, false);
-    document.getElementById ("btn_vars").addEventListener ("mousedown", btn_vars_click, false);
-    document.getElementById ("btn_clr").addEventListener ("mousedown", btn_clr_click, false);
-    // Row #5
-    document.getElementById ("btn_exp_invert").addEventListener ("mousedown", btn_exp_invert_click, false);
-    document.getElementById ("btn_sin").addEventListener ("mousedown", btn_sin_click, false);
-    document.getElementById ("btn_cos").addEventListener ("mousedown", btn_cos_click, false);
-    document.getElementById ("btn_tan").addEventListener ("mousedown", btn_tan_click, false);
-    document.getElementById ("btn_exp").addEventListener ("mousedown", btn_exp_click, false);
-    // Row #6
-    document.getElementById ("btn_exp_2").addEventListener ("mousedown", btn_exp_2_click, false);
-    document.getElementById ("btn_comma").addEventListener ("mousedown", btn_comma_click, false);
-    document.getElementById ("btn_paran_left").addEventListener ("mousedown", btn_paran_left_click, false);
-    document.getElementById ("btn_paran_right").addEventListener ("mousedown", btn_paran_right_click, false);
-    document.getElementById ("btn_div").addEventListener ("mousedown", btn_div_click, false);
-    // Row #7
-    document.getElementById ("btn_log").addEventListener ("mousedown", btn_log_click, false);
-    document.getElementById ("btn_7").addEventListener ("mousedown", btn_7_click, false);
-    document.getElementById ("btn_8").addEventListener ("mousedown", btn_8_click, false);
-    document.getElementById ("btn_9").addEventListener ("mousedown", btn_9_click, false);
-    document.getElementById ("btn_mul").addEventListener ("mousedown", btn_mul_click, false);
-    // Row #8
-    document.getElementById ("btn_ln").addEventListener ("mousedown", btn_ln_click, false);
-    document.getElementById ("btn_4").addEventListener ("mousedown", btn_4_click, false);
-    document.getElementById ("btn_5").addEventListener ("mousedown", btn_5_click, false);
-    document.getElementById ("btn_6").addEventListener ("mousedown", btn_6_click, false);
-    document.getElementById ("btn_sub").addEventListener ("mousedown", btn_sub_click, false);
-    // Row #9
-    document.getElementById ("btn_sto").addEventListener ("mousedown", btn_sto_click, false);
-    document.getElementById ("btn_1").addEventListener ("mousedown", btn_1_click, false);
-    document.getElementById ("btn_2").addEventListener ("mousedown", btn_2_click, false);
-    document.getElementById ("btn_3").addEventListener ("mousedown", btn_3_click, false);
-    document.getElementById ("btn_add").addEventListener ("mousedown", btn_add_click, false);
-    // Row #10
-    document.getElementById ("btn_pwr").addEventListener ("mousedown", btn_pwr_click, false);
-    document.getElementById ("btn_0").addEventListener ("mousedown", btn_0_click, false);
-    document.getElementById ("btn_dec").addEventListener ("mousedown", btn_dec_click, false);
-    document.getElementById ("btn_neg").addEventListener ("mousedown", btn_neg_click, false);
-    document.getElementById ("btn_equ").addEventListener ("mousedown", btn_equ_click, false);
+    var buttons = document.getElementsByClassName ("btn_base");
+
+    for (var i = 0; i < buttons.length; i++) {
+        buttons [i].addEventListener ("mousedown", eval (buttons [i].id + "_click"), false);
+    }
 }
 
 /******************************
