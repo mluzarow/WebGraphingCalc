@@ -2,7 +2,7 @@ function initializeButtonEvents () {
     var buttons = document.getElementsByClassName ("btn_base");
 
     for (var i = 0; i < buttons.length; i++) {
-        buttons [i].addEventListener ("mousedown", eval (buttons [i].id + "_click"), false);
+        buttons [i].addEventListener ("mousedown", window [buttons [i].id + "_click"], false);
     }
 }
 
