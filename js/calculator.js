@@ -237,8 +237,17 @@ function addCommand (t) {
     if (poppedToken != null) {
         // If both tokens are numbers
         if (poppedToken.order == 0 && t.order == 0) {
-            // Collapse this new token into the one before it (they are both numbers)
-			t.character = poppedToken.character + t.character;
+            // Corner case: order 0 token is a negative sign
+            // Since the neg sign is marked as a ~ in the lookup, convert it to a normal
+            // - sign so that the Number () function can properly convert later.
+            if (poppedToken.character == "~") {
+                t.character = "-" + t.character;
+                
+            // Else: token is just another number
+            } else {
+                // Collapse this new token into the one before it (they are both numbers)
+                t.character = poppedToken.character + t.character;
+            }
         } else {
 			// Popped token is an op, so add it back
 			infixQueue.push (poppedToken);

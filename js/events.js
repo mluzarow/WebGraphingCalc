@@ -219,7 +219,7 @@ function btn_dec_click () {
     addCommand (new token ('.', 0));
 }
 function btn_neg_click () {
-
+    addCommand (new token ('~', 0));
 }
 function btn_equ_click () {
     equ ();
