@@ -24,7 +24,7 @@ window.onload = function () {
 }
 
 class token {
-    constructor (c, o, f=null) {
+    constructor (c=null, o, f=null) {
         this.character = c;
         this.order = o;
         this.func = f;
@@ -86,7 +86,7 @@ function initialize () {
 ********************************************************************************************/
 function equ () {
     // Organize the tokens into something we can process
-    var outStack = organizeOutput ();
+    var outStack = organizeOutput (infixQueue);
     // Calculate the answer
     var answer = calcOutput (outStack);
     // Print out the answer
@@ -122,7 +122,7 @@ function calcOutput (stack) {
                 
                 answer.push (new token (poppedToken.func (a), 0));
             // Token is some other op; take 2 numbers
-            } else if (poppedToken.order < 6) {
+            } else if (poppedToken.order < 4) {
                 a = answer.pop ();
                 b = answer.pop ();
                 
@@ -141,45 +141,102 @@ function calcOutput (stack) {
 ** from opStack onto the output stack, outStack. Uses Shunting-yard algorithm.
 **
 ********************************************************************************************/
-function organizeOutput () {
+function organizeOutput (inStack) {
+    // ============ Debug Stuff ===============
+    console.log ("\nInput stack:");
+    for (var i = 0; i < inStack.length; i++) {
+        console.log (inStack [i].character);
+    }
+    
     // Pop from queue; sort order = 0 (numbers) into output array and order > 0 (ops)
     // into op stack
-    var opStack = new Array ();
-    var outStack = new Array ();
-
+    // NOTE: Should a parenthesis '(' order = 4 be found, do not sort and instead prepare
+    // to call self (recursively) with clipped token stack
+    var opStack = new Array ();     // Operator Stack 
+    var outStack = new Array ();    // Output Stack
+    var recStack = new Array ();    // Recursive output stack
+    var recStacking = false;        // Build clipped token stack flag
+    var depth = 0;
+    
     // Continue popping from start of queue until we have every token
-    while (infixQueue.length > 0) {
+    while (inStack.length > 0) {
         // Check to see if token is number or op
-        var poppedToken = infixQueue.shift ();
+        var poppedToken = inStack.shift ();
         
-        if (poppedToken.order == 0) {
-            outStack.push (poppedToken);
-        } else {
-            // Popped token is an op; check to see if the order of stacked ops agrees.
-            var opPoppedToken = opStack.pop ();
-            
-            // Check if opStack is not empty
-            if (opPoppedToken != null) {
-                // Not empty; check orders. If order of existing token is higher,
-                // dump contents onto outStack
-                if (opPoppedToken.order > poppedToken.order) {
-                    // Order incorrect; dump stack
-                    // Put the recently popped op token onto outStack
-                    outStack.push (opPoppedToken);
-                    // Put the rest of the op tokens onto outStack
-                    while (opStack.length > 0) {
-                        outStack.push (opStack.pop ());
-                    }
-                    // Place the new op token on opStack
-                    opStack.push (poppedToken);
+        // Creating new substack for recursive call to self
+        if (recStacking) {
+            // Token is a parenthesis
+            if (poppedToken.order == 4) {
+                // Token is another opening parenthesis
+                if (poppedToken.character == '(') {
+                    // Add to stack and add 1 depth
+                    recStack.push (poppedToken);
+                    depth++;
+                    
+                // Token is a closing parenthesis but depth is not 0
+                } else if (poppedToken.character == ')' && depth > 0) {
+                    // Add to stack and subtract one depth
+                    recStack.push (poppedToken);
+                    depth--;
+                    
+                // Token is a closing parenthesis of depth 0
                 } else {
-                    // Order is fine, so add both back
-                    opStack.push (opPoppedToken);
+                    // Place answer on outStack and end recStacking
+                    outStack.push (calcOutput (organizeOutput (recStack)));
+                    recStack = new Array ();
+                    recStacking = false;
+                }
+            
+            // Token is some other thing
+            } else {
+                // Add to stack
+                recStack.push (poppedToken);
+            }
+            
+        // Normal operation
+        } else {
+            // Token is a parenthesis
+            if (poppedToken.order == 4) {
+                // Check to make sure it is a valid opening parenthesis
+                if (poppedToken.character != '(') {
+                    // Error: Impossible ordering
+                } else {
+                    recStacking = true;
+                }
+                
+            // Token is a number
+            } else if (poppedToken.order == 0) {
+                outStack.push (poppedToken);
+            
+            // Token is an operator
+            } else {
+                // Check to see if the order of stacked operators agrees. Operator below
+                // newly added operator must be of lesser or equal order
+                var opPoppedToken = opStack.pop ();
+                
+                // Check if opStack is not empty
+                if (opPoppedToken != null) {
+                    // Not empty; check orders. If order of existing token is higher,
+                    // dump contents onto outStack
+                    if (opPoppedToken.order > poppedToken.order) {
+                        // Order incorrect; dump stack
+                        // Put the recently popped op token onto outStack
+                        outStack.push (opPoppedToken);
+                        // Put the rest of the op tokens onto outStack
+                        while (opStack.length > 0) {
+                            outStack.push (opStack.pop ());
+                        }
+                        // Place the new op token on opStack
+                        opStack.push (poppedToken);
+                    } else {
+                        // Order is fine, so add both back
+                        opStack.push (opPoppedToken);
+                        opStack.push (poppedToken);
+                    }
+                } else {
+                    // It was empty, so just put it in
                     opStack.push (poppedToken);
                 }
-            } else {
-                // It was empty, so just put it in
-                opStack.push (poppedToken);
             }
         }
     }
@@ -189,6 +246,13 @@ function organizeOutput () {
         outStack.push (opStack.pop ());
     }
 
+    // ============ Debug Stuff ===============
+    console.log ("\nOutput stack:");
+    for (var i = 0; i < outStack.length; i++) {
+        console.log (outStack [i].character);
+    }
+    console.log ("=====================");
+    
     return (outStack);
 }
 
