@@ -10,7 +10,6 @@
 function truncate (a) {
     // Check if number is float
     if (a % 1 != 0) {
-        // Remove this cheap fix !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         return (Number (a.toFixed (10)).toString ());
     }
     
@@ -85,5 +84,5 @@ function exponent (a, b) {
     a = Number (a.character);
     b = Number (b.character);
     
-    return (truncate (Math.exp (a, b)));
+    return (truncate (Math.pow (a, b)));
 }
